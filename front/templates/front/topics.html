@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>黑石碑-赛题</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="{% static '/front/bootstrap/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static '/front/css/index.css' %}" rel="stylesheet"/>
+</head>
+<body class="body-bg">
+<!-- 导航栏开始 -->
+{% include 'front/include/nav.html' %}
+<!-- 导航栏结束 -->
+<!-- web 开始-->
+{% for i in category %}
+    <div class="content">
+        <div class="container">
+            <div class="questions_boby">
+
+                <div class="questions_title">
+                    {{ i.category_name }}
+                </div>
+                <div class="row">
+
+                    {% for j in i.category.all %}
+
+                        {% if j.display %}
+
+                            {% if j.image_tag in docker_images %}
+                                <div class="col-md-3">
+                                    <div class="dt_bg">
+                                        <span class="question-tm">{{ j.topic_name }}</span><br/>
+                                        <span class="question-fs">总分：{{ j.score }}</span><br/>
+
+                                        <a href="{% url 'front_topic' j.id %}">开始答题</a>
+                                        {#                                        <button href="javascript:void(0)" onclick="show('ms56')">开始答题</button>#}
+                                    </div>
+                                </div>
+
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}
+
+
+<div id="fade" class="black_overlay"></div>
+
+<!-- 开始答题弹框 结束 -->
+<!-- 底部模块 start -->
+{#<div class="contact_big">#}
+<div class="inform_bg">
+
+</div>
+<!-- 底部模块 end -->
+<script src="{% static '/front/js/jquery-1.9.1.min.js' %}"></script>
+<script src="{% static '/front/bootstrap/bootstrap.min.js' %}"></script>
+<script>
+    function show(tag) {
+        const light = document.getElementById(tag);
+        light.style.display = 'block';
+        $("#fade").css('display', 'block');
+    }
+
+    function hide(tag) {
+        const light = document.getElementById(tag);
+        light.style.display = 'none';
+        $("#fade").css('display', 'none');
+    }
+
+    $(function () {
+        $(".tabbox li").click(function () {
+            //获取点击的元素给其添加样式，讲其兄弟元素的样式移除
+            $(this).addClass("active").siblings().removeClass("active");
+            //获取选中元素的下标
+            const index = $(this).index();
+            $(this).parent().siblings().children().eq(index).addClass("active")
+                .siblings().removeClass("active");
+        });
+    });
+    $(".nav-li").each(function () {
+        $(this).click(function () {
+            $(".nav-li").removeClass("nav-aHover");
+            $(this).addClass("nav-aHover");
+        })
+    })
+</script>
+</body>
+</html>

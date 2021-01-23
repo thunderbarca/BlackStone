@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>黑石碑-登录</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="{% static '/front/bootstrap/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static '/front/css/login.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static '/front/css/font.css' %}">
+    <link rel="stylesheet" href="{% static '/front/css/xadmin.css' %}">
+
+
+    <style type="text/css">
+        label.error {
+            position: inherit;
+        }
+    </style>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location
+        }
+    </script>
+</head>
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="login-border">
+                <div class="login_zc"><p>没有账号？<a href="{% url 'front_reg' %}">去注册</a></p></div>
+                <div class="login-yhdl"><p>用户登录</p></div>
+                <form id="loginForm">
+                    {% csrf_token %}
+                    <div class="login-dl">
+                        <div class="login-position">
+                            <span id="login_img1"></span>
+                            <input type="text" name="username" id="username" class="form-control uname"
+                                   placeholder="请输入邮箱或用户名"/>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <div class="login-position">
+                            <span id="login_img2"></span>
+                            <input type="password" name="password" id="password" class="form-control pword m-b"
+                                   placeholder="请输入密码"
+                                   value=""/>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="login-position">
+                                    <span id="login_img3"></span>
+                                    <input type="text" name="validateCode" class="form-control code" id="validateCode"
+                                           placeholder="请输入验证码" maxlength="5">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="javascript:void(0);" title="点击更换验证码">
+                                    <img src="{% url 'captcha' %}" class="imgcode" width="98%" alt="加载失败"
+                                         onclick="replace_img()" id="imgCode"/>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-success btn-block" id="btnSubmit" data-loading=""
+                            onclick="player_login()">登录
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="signup-footer">
+    </div>
+</div>
+<script src="{% static '/front/js/jquery-1.9.1.min.js' %}"></script>
+<script src="{% static '/front/js/jquery.validate.min.js' %}"></script>
+<script src="{% static '/front/js/login.js' %}"></script>
+<script src="{% static '/front/bootstrap/bootstrap.min.js' %}"></script>
+
+<link rel="stylesheet" href="{% static '/front/css/layui.css' %}">
+<link rel="stylesheet" href="{% static '/front/css/font.css' %}">
+<link rel="stylesheet" href="{% static '/front/css/xadmin.css' %}">
+<script type="text/javascript" src="{% static '/front/lib/layui/layui.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static '/front/js/xadmin.js' %}"></script>
+<link rel="stylesheet" href="{% static '/front/css/main.css' %}">
+
+<script type="text/javascript">
+    function replace_img() {
+        const img = document.getElementById("imgCode");
+        img.src = "{% url 'captcha' %}" + "?" + Math.random();
+
+    }
+</script>
+
+
+<script>
+
+    /* 用户登录*/
+    function player_login() {
+
+        const username = $("#username").val();
+        const password = $("#password").val();
+        const captcha = $("#validateCode").val();
+        const token = '{{csrf_token}}';
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'front_login' %}",
+            dataType: "json",
+            async: true,
+            data: {
+                username: username,
+                password: password,
+                captcha: captcha,
+            },
+            headers: {"X-CSRFToken": token},
+            success: function (data) {
+                if (data.status === 200) {
+                    window.location = "/"
+
+                } else {
+
+                    layer.alert("<em style='color:blue'>" + data.msg + "</em>", {icon: 2}, function () {
+                        window.location.reload()
+                    });
+                }
+            }
+        });
+
+        return false;
+
+
+    }
+
+</script>
+</body>
+</html>

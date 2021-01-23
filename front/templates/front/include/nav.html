@@ -1,0 +1,85 @@
+{% load static %}
+
+<link href="{% static "/front/bootstrap/bootstrap.min.css" %}" rel="stylesheet"/>
+<link href="{% static "/front/css/index.css" %}" rel="stylesheet"/>
+
+<div class="top-nav">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header navbar-left">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{% url 'front_index' %}" class="navbar-brand">
+                    <img height="38px;" src="{% static '/front/img/logo.png' %}" href="{% url 'front_index' %}">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-left" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="hvr-bounce-to-bottom {% url 'front_index' as index %} {% if request.path == index %}  active{% endif %}">
+                        <a href="{% url 'front_index' %}">首页</a></li>
+                    <li class="hvr-bounce-to-bottom {% url 'front_topics' as index %} {% if request.path == index %}  active{% endif %} ">
+                        <a href="{% url 'front_topics' %}">题目</a></li>
+                    <li class="hvr-bounce-to-bottom {% url 'front_players' as player %} {% if request.path == player %}  active{% endif %}">
+                        <a href="{% url 'front_players' %}">用户</a></li>
+                    <li class="hvr-bounce-to-bottom {% url 'front_rank' as index %} {% if request.path == index %}  active{% endif %} ">
+                        <a href="{% url 'front_rank' %}">排行榜</a></li>
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="header-right-user">
+
+                {% if request.user.is_authenticated %}
+
+                    <!--登录后-->
+                    <div class="afterlogin">
+                        <div class="login-nav">
+                            <span>{{ request.user.username }}</span><img src="{% static "/front/img/index-tx.png" %}"
+                                                                         id="user_head" alt=""/>
+                        </div>
+                        <div class="login-list">
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'back_index' %}"><span>后台管理</span> </a>
+                                <a href="{% url 'back_logout' %}"><span>退出</span></a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                {% elif request.session.user_name %}
+                    <!--登录后-->
+                    <div class="afterlogin">
+                        <div class="login-nav">
+                            <span>{{ request.session.user_name }}</span><img
+                                src="{% static "/front/img/index-tx.png" %}"
+                                id="user_head" alt=""/>
+
+                        </div>
+
+                        <div class="login-list">
+                            <a href="{% url 'front_personal' request.session.user_name %}"><span>个人战绩</span> </a>
+                            <a href="{% url 'front_logout' %}"><span>退出</span></a>
+                        </div>
+
+                    </div>
+
+
+                {% else %}
+
+                    <!--登录前 去掉hide显示-->
+                    <div class="beforelogin">
+                        <a href="{% url 'front_login' %}">登录</a> <a href="{% url 'front_reg' %}">注册</a>
+                    </div>
+
+                {% endif %}
+                <!--登录后-->
+            </div>
+        </div>
+    </nav>
+</div>

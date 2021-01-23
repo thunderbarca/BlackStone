@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title> 黑石碑</title>
+</head>
+<body>
+</body>
+</html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>黑石碑-首页</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+
+
+</head>
+<body class="body-bg">
+<!-- 导航栏开始 -->
+{% include 'front/include/nav.html' %}
+<!-- 导航栏结束 -->
+<!-- banner 开始 -->
+<div id="banner-bg" class="content bannerBg" data-scrollview="true">
+    <!-- <img src="img/index_banner.png" alt="banner-bg"/> -->
+</div>
+<!-- banner 结束 -->
+<!-- 赛事介绍模块 开始 -->
+<div id="" class="content" data-scrollview="true">
+    <!-- begin container -->
+    <div class="container">
+        <div class="txt-title">
+            <img src="{% static '/front/img/title_img1.png' %}" class="title_img1"/>
+            <h2 class="content-title">赛事介绍</h2>
+            <img src="{% static '/front/img/title_img2.png' %}" class="title_img2"/>
+
+        </div>
+        <!-- begin row -->
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="ssjj_bg ssjj_bottom">
+                    <h3>面向对象</h3>
+                    <div class="txt-p">
+                        <p>所有参赛成员必须为全日制在读学生，专业年级不限。</p>
+                        <p>非高等院校在读学生参赛，成绩不能参与最终排名。</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="ssjj_bg ssjj_bottom">
+                    <h3>参与形式</h3>
+                    <div class="txt-p">
+                        <p>个人赛，不支持团队参赛，一旦发现交换FLAG等行为，取消比赛成绩。</p>
+                        <p>闯关赛，选手正确回答某方向当前开放的所有题目后，可提前解锁该方向下1道题。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="ssjj_bg">
+                    <h3>比赛方式</h3>
+                    <div class="txt-p">
+                        <p>登录"DDCTF-2019" 首页，点击“注册”，填写个人信息，取得参赛资格</p>
+                        <p>登录后，点击“赛题”，进入全部赛题页面，每个方向默认打开前n道题目。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="ssjj_bg">
+                    <h3>评分标准</h3>
+                    <div class="txt-p">
+                        <p>每道题有固定分值，根据难度系数有不同分数。</p>
+                        <p>排名时，若分数相同，根据最后提交FLAG的时间排序，时间越早排名越靠前。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- 赛事介绍模块 结束 -->
+<!-- 赛题方向模块 开始 -->
+<div id="" class="content" data-scrollview="true">
+    <!-- begin container -->
+    <div class="container">
+        <div class="txt-title">
+            <img src="{% static '/front/img/title_img1.png' %}" class="title_img1"/>
+            <h2 class="content-title">赛题方向</h2>
+            <img src="{% static '/front/img/title_img2.png' %}" class="title_img2"/>
+            <div class="stfx_xxk">
+                <div id="stfx_tab" class="stfx_tabbox">
+                    <ul>
+                        <li class="active ul_right">三大平台</li>
+                        <li>三大ISA</li>
+                    </ul>
+                    <div class="stfxcontent">
+                        <div id="stfxPage1" class="active">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stfx_xxkimg">
+                                        <img src="{% static '/front/img/stfx_icon1.png' %}"/>
+                                        <p>Linux</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stfx_xxkimg">
+                                        <img src="{% static '/front/img/stfx_icon2.png' %}"/>
+                                        <p>Windows</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stfx_xxkimg">
+                                        <img src="{% static '/front/img/stfx_icon3.png' %}"/>
+                                        <p>Android</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="stfx_bottomTxt"><span>题目类型包括逆向，Web安全，PWN，安卓，MISC等。</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="stfxPage2" class="">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stfx_xxkimg">
+                                        <img src="{% static '/front/img/stfx_icon4.png' %}"/>
+                                        <p>X86</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stfx_xxkimg">
+                                        <img src="{% static '/front/img/stfx_icon5.png' %}"/>
+                                        <p>AMD64</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stfx_xxkimg">
+                                        <img src="{% static '/front/img/stfx_icon6.png' %}"/>
+                                        <p>ARM</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="stfx_bottomTxt"><span>题目类型包括逆向，Web安全，PWN，安卓，MISC等。</span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- end container -->
+</div>
+<!-- 赛题方向模块 结束 -->
+<!-- 比赛时间轴模块 开始 -->
+<div id="" class="content" data-scrollview="true">
+    <!-- begin container -->
+    <div class="container">
+        <div class="txt-title">
+            <img src="{% static '/front/img/title_img1.png' %}" class="title_img1"/>
+            <h2 class="content-title">比赛时间轴</h2>
+            <img src="{% static '/front/img/title_img2.png' %}" class="title_img2"/>
+
+        </div>
+        <!-- begin row -->
+        <div class="row">
+            <div style="padding:0 50px;">
+                <div class="col-md-3">
+                    <div class="bssjz_time">
+                        <span>2019/06/10</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="bssjz_time">
+                        <span>{{ project.start_time }} </span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="bssjz_time">
+                        <span>{{ project.end_time }} </span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="bssjz_time">
+                        <span>2019/06/19 <br/>上午11：00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bssjz-lc">
+                    <span>开始报名</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bssjz-lc">
+                    <span>比赛开始</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bssjz-lc">
+                    <span>比赛结束</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bssjz-lc">
+                    <span>颁奖典礼</span>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <div class="row">
+
+        </div>
+    </div>
+    <!-- end container -->
+</div>
+<!-- 比赛时间轴模块 结束 -->
+<!-- 比赛奖励模块 开始 -->
+<div id="" class="content" data-scrollview="true">
+    <!-- begin container -->
+    <div class="container">
+        <div class="txt-title">
+            <img src="{% static '/front/img/title_img1.png' %}" class="title_img1"/>
+            <h2 class="content-title">比赛奖励</h2>
+            <img src="{% static '/front/img/title_img2.png' %}" class="title_img2"/>
+
+        </div>
+        <!-- begin row -->
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <img src="{% static '/front/img/bsjl_img1.png' %}"/>
+                <div class="bsjl_txt">
+                    <span>实习导师</span>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <img src="{% static '/front/img/bsjl_img2.png' %}"/>
+                <div class="bsjl_txt">
+                    <span>受邀前往北京，安全专家现场面试。</span>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <img src="{% static '/front/img/bsjl_img3.png' %}"/>
+                <div class="bsjl_txt">
+                    <span>获得纯银奖章和荣誉证书，直通面试环节。</span>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- 比赛奖励模块 结束 -->
+<!-- 主办方模块 开始 -->
+<div id="" class="content" data-scrollview="true">
+    <!-- begin container -->
+    <div class="container">
+        <div class="txt-title">
+            <img src="{% static '/front/img/title_img1.png' %}" class="title_img1"/>
+            <h2 class="content-title">主办方</h2>
+            <img src="{% static '/front/img/title_img2.png' %}" class="title_img2"/>
+
+        </div>
+        <!-- begin row -->
+{#        <div class="row">#}
+{#            <div class="col-md-4 col-sm-6 col-xs-12">#}
+{#                <div class="logo_bg">#}
+{#                    <img src="{% static '/front/img/qi.png' %}"/>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-4 col-sm-6 col-xs-12">#}
+{#                <div class="logo_bg">#}
+{#                    <img src="{% static '/front/img/an.png' %}"/>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-4 col-sm-6 col-xs-12">#}
+{#                <div class="logo_bg">#}
+{#                    <img src="{% static '/front/img/ze.png' %}"/>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- 主办方模块 结束 -->
+
+<!-- d底部模块 start -->
+<div class="contact_big">
+
+</div>
+
+<!-- 底部模块 end -->
+<!-- 全局js -->
+<script src="{% static "/front/js/jquery-1.9.1.min.js" %}"></script>
+<script src="{% static "/front/bootstrap/bootstrap.min.js" %}"></script>
+<!-- 验证插件 -->
+<script type="text/javascript">
+    $(function () {
+        $(".stfx_tabbox li").click(function () {
+            //获取点击的元素给其添加样式，讲其兄弟元素的样式移除
+            $(this).addClass("active").siblings().removeClass("active");
+            //获取选中元素的下标
+            const index = $(this).index();
+            $(this).parent().siblings().children().eq(index).addClass("active")
+                .siblings().removeClass("active");
+        });
+    });
+    $(".navigation-link").each(function () {
+        $(this).click(function () {
+            $(".navigation-link").removeClass("nav-aHover");
+            $(this).addClass("nav-aHover");
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+html {
+	height:100%
+}
+body.signin {
+	height:auto;
+	background:url(../img/login_bg.png) no-repeat top;
+	color:rgba(255,255,255,.95)
+}
+.signinpanel {
+	width:570px;
+	margin:0 auto;
+	margin-top: 50px;
+}
+.signinpanel .logopanel {
+	float:none;
+	width:auto;
+	padding:0;
+	background:0 0
+}
+.signin-info{
+	text-align: center;
+	padding-bottom: 20px;
+}
+.login-border{
+	background: url(../img/login_bg_form.png) no-repeat  center;
+	border-radius: 10px;
+	padding: 80px 60px;
+}
+
+.input_checkbox{
+color: #FFFFFF;	
+padding: 10px 0px;
+font-size: 14px;
+line-height: 16px;
+vertical-align:middle;
+}
+.input_checkbox input{
+	width:16px;
+	height:16px;
+	margin-right: 10px;
+	background: none;
+	padding-top: 10px;
+	
+}
+.signinpanel .signin-info ul {
+	list-style:none;
+	padding:0;
+	margin:20px 0
+}
+.signinpanel .form-control {
+	display:block;
+	margin-top:15px
+}
+.signinpanel .uname {
+	background:rgba(255,255,255,0);
+	color:#fff;
+}
+.login-position{
+	position: relative;
+}
+#login_img1{
+	background: url(../img/login_icon1.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top: 8px;
+	left: 30px;
+}
+#login_img2{
+	background: url(../img/login_icon2.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top: 8px;
+	left: 30px;
+}
+#login_img3{
+	background: url(../img/login_icon3.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+.login-position input{
+	border: 1px #0687CB solid;
+padding: 0 0 0 80px;
+position: relative;
+}
+.signinpanel .pword {
+	background: rgba(255,255,255,0);
+	color:#fff
+}
+.signinpanel .code {
+    background: rgba(255,255,255,0);
+	color:#fff; 
+	margin:15px 0 15px 0;
+}
+.signinpanel .btn {
+	margin-top: 20px;
+	margin-bottom:45px
+}
+.imgcode{
+	height: 48px;
+	margin-top: 15px;
+}
+.btn-success{
+	width: 70%;
+	height: 41px;
+	background: #0EA5FF;
+	border: #0EA5FF 1px solid;
+	font-size: 20px;
+	font-weight: 500;
+	display:block;
+margin-left:auto;
+margin-right:auto;
+}
+.signinpanel form {
+	padding:0px 10px 30px 0;
+}
+.login-dl{
+	position: relative;
+}
+.signup-footer {
+/* 	border-top:solid 1px rgba(255,255,255,.3); */
+	margin:20px 0 0 0;
+	padding-top:15px
+}
+.form-control{
+	height: 48px;
+}
+@media screen and (max-width:768px) {
+	.signinpanel,.signuppanel {
+	margin:0 auto;
+	width:420px!important;
+	padding:20px
+}
+.signinpanel form {
+	margin-top:20px
+}
+.signup-footer,.signuppanel .form-control {
+	margin-bottom:10px
+}
+.signup-footer .pull-left,.signup-footer .pull-right {
+	float:none!important;
+	text-align:center
+}
+.signinpanel .signin-info ul {
+	display:none
+}
+}@media screen and (max-width:320px) {
+	.signinpanel,.signuppanel {
+	margin:0 20px;
+	width:auto
+}
+}
+.login_zc{
+	text-align: right;
+	margin:20px 0 24px 0;
+	padding-top: 40px;
+	font-size: 14px;
+}
+.login_zc a{
+	color: #fff;
+}
+.login_zc a:hover{
+	text-decoration: none;
+	color: #09DEED;
+}
+.login-yhdl{
+	text-align: center;
+}
+.login-yhdl p{
+	font-size: 20px;
+}
+.btn-success:hover{
+	background-color:#0EA5FF;
+    border-color: #0EA5FF;
+}
+/* 复选框 */
+input[type=checkbox]{
+	-webkit-appearance:none;
+	}
+input[type=checkbox] {
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 15px;
+  height: 12px;
+  position: relative;
+}
+
+input[type=checkbox]:after {
+  position: absolute;
+  width: 15px;
+  height:15px;
+  top: 0;
+  content: " ";
+  background-color: rgba(255,255,255,0);
+  color: #fff;
+  display: inline-block;
+  visibility: visible;
+  padding: 0px 3px;
+  border-radius: 3px;
+  border: 1px solid #09DEED;
+}
+
+input[type=checkbox]:checked:after {
+	position: absolute;
+	top: -3px;
+  content: "✓";
+  font-size: 12px;
+  color:#09DEED ;
+}
+/* 复选框 end */
+/* ============注册页开始============= */
+.registe-border{
+	background: url(../img/registe_bg.png) no-repeat center;
+	background-size:100% 100% ;
+	padding: 0px 60px;
+}
+.registe_img1{
+	background: url(../img/registe_icon1.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top: 8px;
+	left: 30px;
+}
+#registe_img2{
+	background: url(../img/login_icon1.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registe_img7{
+	background: url(../img/login_icon2.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registe_img3{
+	background: url(../img/registe_icon2.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registe_img4{
+	background: url(../img/registe_icon3.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registe_img5{
+	background: url(../img/registe_icon4.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registe_img6{
+	background: url(../img/registe_icon5.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+/* ============注册页结束============= */
+/* ============重置完成页开始============= */
+.reset-finish-border{
+	background: url(../img/reset-finish-bg.png) no-repeat center;
+	padding: 40px 60px;
+}
+.reset-finish-yhdl{
+	margin-top: 40px;
+}
+/* ============重置完成页结束============= */
+/* ============重置密码页开始============= */
+#registePassword_img1{
+	background: url(../img/registe_icon1.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registePassword_img2{
+	background: url(../img/login_icon3.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registePassword_img3{
+	background: url(../img/login_icon2.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+#registePassword_img4{
+	background: url(../img/registe_icon2.png) no-repeat left;
+	position: absolute;
+	width: 26px;
+	height: 30px;
+	top:8px;
+	left: 30px;
+}
+.resetPassword-btn{
+	height: 48px;
+	margin-top: 15px;
+	padding: 0 0;
+	border-radius: 3px;
+	border:none ;
+	padding: 0 10px;
+	background: -webkit-linear-gradient(left, #1560EB , #00A4FF); /* Safari 5.1 - 6.0 */
+	background: -o-linear-gradient(right, #1560EB , #00A4FF); /* Opera 11.1 - 12.0 */
+	background: -moz-linear-gradient(right,#1560EB , #00A4FF); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, #1560EB , #00A4FF); /* 标准的语法 */
+}
+/* ============重置密码页结束============= */
+/* ============设置页开始============= */
+.set-up-border{
+	background: url(../img/set-up-bg.png) no-repeat center;
+	background-size:100% 100% ;
+	padding: 5px 50px 20px 50px;
+}
+.setUp-txt{
+	background:url(../img/setUp-txtBg.png) no-repeat center ;
+	/* margin-top: 30px; */
+	margin-bottom:30px;
+	margin-left: -28px;
+}
+/* ============设置页结束============= */
+/* ==================================表单验证====================== */
+label.error{
+	display:block;
+	height: 0px;
+	color: rgba(228,80,80,.8);
+	top:-35px;
+	right:-270px;
+}

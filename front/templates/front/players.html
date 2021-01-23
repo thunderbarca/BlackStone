@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>黑石碑-用户</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="{% static '/front/bootstrap/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static '/front/css/index.css' %}" rel="stylesheet"/>
+</head>
+<body class="body-bg">
+<!-- 导航栏开始 -->
+{% include 'front/include/nav.html' %}
+<!-- 导航栏结束 -->
+
+<div class="content">
+    <div class="container">
+        <div class="table_bg">
+            <table class="table_table table_title">
+                <tr>
+                    <td>昵称</td>
+                    <td>创建时间</td>
+                    <td>学校/单位</td>
+                </tr>
+            </table>
+            <table class="table_table table_border" id="table_page">
+
+                {% for user in user_list %}
+
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.create_date | date:'Y-m-d H:i:s' }}</td>
+                        <td>{{ user.address }}</td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+        <div class="layui-card-body ">
+            <div class="page">
+                <div>
+                    <ul class="pagination" id="pager">
+                        {#上一页按钮开始#}
+                        {# 如果当前页有上一页#}
+                        {% if user_list.has_previous %}
+                            {#  当前页的上一页按钮正常使用#}
+                            <li class="previous"><a
+                                    href="{% url "front_players" %}?page={{ user_list.previous_page_number }}">上一页</a>
+                            </li>
+                        {% else %}
+                            {# 当前页的不存在上一页时,上一页的按钮不可用#}
+                            <li class="previous disabled"><a href="#">上一页</a></li>
+                        {% endif %}
+                        {#上一页按钮结束#}
+                        {# 页码开始#}
+                        {% for num in paginator.page_range %}
+
+                            {% if num == currentPage %}
+                                <li class="item active"><a href="{% url "front_players" %}?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% else %}
+                                <li class="item"><a href="{% url "front_players" %}?page={{ num }}">{{ num }}</a></li>
+
+                            {% endif %}
+                        {% endfor %}
+                        {#页码结束#}
+                        {# 下一页按钮开始#}
+                        {% if user_list.has_next %}
+                            <li class="next"><a
+                                    href="{% url "front_players" %}?page={{ user_list.next_page_number }}">下一页</a>
+                            </li>
+                        {% else %}
+                            <li class="next disabled"><a href="#">下一页</a></li>
+                        {% endif %}
+                        {# 下一页按钮结束#}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- d底部模块 start -->
+{#<div class="contact_big">#}
+<div class="inform_bg">
+
+</div>
+<!-- 底部模块 end -->
+<script src="{% static '/front/js/jquery-1.9.1.min.js' %}"></script>
+<script src="{% static '/front/bootstrap/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+    var obj_2 = {
+        obj_box: '.page_2',//翻页容器
+        total_item: 10,//条目总数
+        per_num: 1,//每页条目数
+        current_page: 2//当前页
+    };
+    /*调用分页方法,初始化数据*/
+    page_ctrl(obj_2);
+    $(".nav-li").each(function () {
+        $(this).click(function () {
+            $(".nav-li").removeClass("nav-aHover");
+            $(this).addClass("nav-aHover");
+        })
+    })
+</script>
+</body>
+</html>

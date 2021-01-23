@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{% static 'backend/lib/layui-v2.5.5/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'backend/css/public.css' %}" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">标签名</label>
+        <div class="layui-input-block">
+            <input type="text" name="category" lay-verify="required" lay-reqtext="标签名不能为空"
+                   placeholder="{{ category.category_name }}" value=""
+                   class="layui-input">
+            <tip>填写标签名。</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'backend/lib/layui-v2.5.5/layui.js' %}" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        const form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            const token = '{{csrf_token}}';
+            const _data = {"name": data.field.category, "category_id": "{{category.id}}"};
+
+            $.ajax({
+                url: "{% url 'back_category_edit' %}",
+                data: _data,
+                type: 'post',
+                dataType: 'json',
+                headers: {"X-CSRFToken": token},
+                success: function (data) {
+                    if (data.status === 200) {
+
+                        const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                        parent.layer.close(index); //再执行关闭
+
+                        return false;
+                    } else {
+                        alert(data.msg);
+                        return false;
+                    }
+                }
+            });
+
+        });
+
+    });
+</script>
+</body>
+</html>

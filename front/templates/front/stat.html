@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>黑石碑-成绩</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="{% static '/front/bootstrap/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static '/front/css/index.css' %}" rel="stylesheet"/>
+    <script src="{% static '/front/js/jquery-1.9.1.min.js' %}"></script>
+    <script src="{% static '/front/js/echarts.min.js' %}"></script>
+</head>
+<body class="body-bg" id="mainBox">
+<!-- 导航栏开始 -->
+{% include 'front/include/nav.html' %}
+<!-- 导航栏结束 -->
+<div class="content">
+    <div class="container">
+        <div class="result_body">
+            <div class="result_title">{{ request.session.user_name }}的成绩</div>
+            <div class="result_resultBG">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="result_txt">
+                            <h1>{{ key1 }}th</h1>
+                            <p>总排名</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result_txt">
+                            <h1>{{ score }}</h1>
+                            <p>累计分数</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 饼图开始 -->
+        {#        <div class="row">#}
+        {#            <div class="col-md-6">#}
+        {#                <div class="result_pieBG">#}
+        {#                    <span>赛题正错对比分布图</span>#}
+        {#                    <div id="result_ture" style="height: 420px; width: 98%;"></div>#}
+        {#                    <script type="text/javascript">#}
+        {#                        var myChart = echarts.init(document.getElementById('result_ture'));#}
+        {#                        option = {#}
+        {#                            tooltip: {#}
+        {#                                trigger: 'item',#}
+        {#                                formatter: "{a} <br/>{b} : {c} ({d}%)"#}
+        {#                            },#}
+        {#                            legend: {#}
+        {#                                x: 'center',#}
+        {#                                y: 'bottom',#}
+        {#                                padding: [40, 10],#}
+        {#                                itemGap: 50,#}
+        {#                                data: [{#}
+        {#                                    name: '错误Flag数',#}
+        {#                                    textStyle: {#}
+        {#                                        color: '#E23333'#}
+        {#                                    }#}
+        {#                                },#}
+        {#                                    {#}
+        {#                                        name: '正确Flag数',#}
+        {#                                        textStyle: {#}
+        {#                                            color: '#3BB936'#}
+        {#                                        }#}
+        {#                                    }#}
+        {#                                ]#}
+        {#                            },#}
+        {#                            series: [{#}
+        {#                                name: '赛题正错',#}
+        {#                                type: 'pie',#}
+        {#                                radius: '55%',#}
+        {#                                center: ['50%', '45%'],#}
+        {#                                color: ["#3BB936", "#E23333"],#}
+        {#                                data: [{#}
+        {#                                    value: 80,#}
+        {#                                    name: '正确Flag数'#}
+        {#                                }, {#}
+        {#                                    value: 20,#}
+        {#                                    name: '错误Flag数'#}
+        {#                                },],#}
+        {#                                itemStyle: {#}
+        {#                                    emphasis: {#}
+        {#                                        shadowBlur: 10,#}
+        {#                                        shadowOffsetX: 0,#}
+        {#                                        shadowColor: 'rgba(0, 0, 0, 0.5)'#}
+        {#                                    }#}
+        {#                                }#}
+        {#                            }]#}
+        {#                        };#}
+        {#                        myChart.setOption(option);#}
+        {#                        myChart.on('click', function (params) {#}
+        {#                            if (params.value) {#}
+        {#                                alert(params.name + params.value);#}
+        {#                            } else {#}
+        {#                                alert(params.name + params.value);#}
+        {#                            }#}
+        {#                        });#}
+        {#                    </script>#}
+        {##}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="col-md-6">#}
+        {#                <div class="result_pieBG">#}
+        {#                    <span>赛题类别对比分布图</span>#}
+        {#                    <div id="result_lx" style="height: 420px; width: 98%;"></div>#}
+        {#                    <script type="text/javascript">#}
+        {#                        var myChart = echarts.init(document.getElementById('result_lx'));#}
+        {#                        option = {#}
+        {#                            tooltip: {#}
+        {#                                trigger: 'item',#}
+        {#                                formatter: "{a} <br/>{b} : {c} ({d}%)"#}
+        {#                            },#}
+        {#                            legend: {#}
+        {#                                x: 'center',#}
+        {#                                y: 'bottom',#}
+        {#                                itemGap: 30,#}
+        {#                                padding: [40, 10],#}
+        {#                                data: [{#}
+        {#                                    name: 'Android',#}
+        {#                                    textStyle: {#}
+        {#                                        color: '#ff7596'#}
+        {#                                    }#}
+        {#                                },#}
+        {#                                    {#}
+        {#                                        name: 'MISC',#}
+        {#                                        textStyle: {#}
+        {#                                            color: '#52afff'#}
+        {#                                        }#}
+        {#                                    },#}
+        {#                                    {#}
+        {#                                        name: 'Reverse',#}
+        {#                                        textStyle: {#}
+        {#                                            color: '#ff9625'#}
+        {#                                        }#}
+        {#                                    },#}
+        {#                                    {#}
+        {#                                        name: 'Web',#}
+        {#                                        textStyle: {#}
+        {#                                            color: '#6eff68'#}
+        {#                                        }#}
+        {#                                    },#}
+        {#                                ]#}
+        {#                            },#}
+        {#                            series: [{#}
+        {#                                name: '赛题类别',#}
+        {#                                type: 'pie',#}
+        {#                                radius: '55%',#}
+        {#                                center: ['50%', '45%'],#}
+        {#                                color: ["#ff7596", "#6eff68", "#ff9625", "#52afff"],#}
+        {#                                data: [{#}
+        {#                                    value: 10,#}
+        {#                                    name: 'Android'#}
+        {#                                },#}
+        {#                                    {#}
+        {#                                        value: 30,#}
+        {#                                        name: 'Web'#}
+        {#                                    },#}
+        {#                                    {#}
+        {#                                        value: 30,#}
+        {#                                        name: 'Reverse'#}
+        {#                                    },#}
+        {#                                    {#}
+        {#                                        value: 30,#}
+        {#                                        name: 'MISC'#}
+        {#                                    },#}
+        {##}
+        {##}
+        {#                                ],#}
+        {#                                itemStyle: {#}
+        {#                                    emphasis: {#}
+        {#                                        shadowBlur: 10,#}
+        {#                                        shadowOffsetX: 0,#}
+        {#                                        shadowColor: 'rgba(0, 0, 0, 0.5)'#}
+        {#                                    }#}
+        {#                                }#}
+        {#                            }]#}
+        {#                        };#}
+        {#                        myChart.setOption(option);#}
+        {#                        myChart.on('click', function (params) {#}
+        {#                            if (params.value) {#}
+        {#                                alert(params.name + params.value);#}
+        {#                            } else {#}
+        {#                                alert(params.name + params.value);#}
+        {#                            }#}
+        {#                        });#}
+        {#                    </script>#}
+        {##}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        <!-- 饼图结束 -->
+    </div>
+</div>
+<!-- 赛题类型结束 -->
+<!-- 战绩榜 开始 -->
+{#<div class="content">#}
+{#    <div class="container">#}
+{#        <div class="txt-title">#}
+{#            <img src="{% static '/front/img/ranking_list_titleBG.png' %}" class="ranking_title_img1"/>#}
+{#            <h2 class="content-title ranking_color">{{ request.user.username }}的战绩榜</h2>#}
+{#            <img src="{% static '/front/img/ranking_list_titleBG.png' %}" class="ranking_title_img2"/>#}
+{#        </div>#}
+{#        <!-- echarts 图表开始 -->#}
+{#        <div class="top_bg">#}
+{#            <div id="rankingTop" class="ranking-top" style="height: 406px; width: 800px;"></div>#}
+{#            <script type="text/javascript">#}
+{#                var myChart = echarts.init(document.getElementById('rankingTop'));#}
+{#                option = {#}
+{#                    tooltip: {#}
+{#                        trigger: 'axis'#}
+{#                    },#}
+{#                    grid: {#}
+{#                        top: '10px',#}
+{#                        left: '0%',#}
+{#                        right: '10px',#}
+{#                        bottom: '0%',#}
+{#                        containLabel: true#}
+{#                    },#}
+{##}
+{#                    xAxis: {#}
+{#                        type: 'category',#}
+{#                        boundaryGap: false,#}
+{#                        data: ['04-12', '04-12 11', '04-13 11', '04-14', '04-14 11',#}
+{#                            '04-15 11', '04-16', '04-16 11', '04-17 11', '04-18', '04-18 11', '04-19 11', '04-20'],#}
+{#                        axisLine: {#}
+{#                            show: true,#}
+{#                            lineStyle: {#}
+{#                                color: '#00baff'#}
+{#                            }#}
+{#                        },#}
+{#                        axisLabel: {#}
+{#                            interval: 2,#}
+{#                        },#}
+{#                        axisTick: { //y轴刻度线#}
+{#                            show: false#}
+{#                        },#}
+{#                        splitLine: {#}
+{#                            show: true,#}
+{#                            lineStyle: {#}
+{#                                color: 'rgba(0,186,255,0.1)'#}
+{#                            }#}
+{#                        }#}
+{#                    },#}
+{#                    yAxis: {#}
+{#                        type: 'value',#}
+{#                        axisLine: {#}
+{#                            show: true,#}
+{#                            lineStyle: {#}
+{#                                color: '#00baff'#}
+{#                            }#}
+{#                        },#}
+{#                        splitLine: {#}
+{#                            show: true,#}
+{#                            lineStyle: {#}
+{#                                color: '#00baff'#}
+{#                            }#}
+{#                        }#}
+{#                    },#}
+{#                    series: [{#}
+{#                        name: '蔡小葵',#}
+{#                        smooth: true,#}
+{#                        symbolSize: 5,#}
+{#                        symbol: 'circle',#}
+{#                        type: 'line',#}
+{#                        color: '#FF9000',#}
+{#                        data: ["0", '1300', "1365", '1365', "2245", "1765", "1765", "2319", "2068", "2431", "2399", "2490", "2916",],#}
+{#                    }]#}
+{#                };#}
+{##}
+{#                myChart.setOption(option);#}
+{#            </script>#}
+{#        </div>#}
+{#        <!-- echarts 图表结束 -->#}
+{#    </div>#}
+{#</div>#}
+<!-- 战绩榜 结束 -->
+<!-- 已解答 开始 -->
+<div class="content">
+    <div class="container">
+        <div class="result_wt">已解答的赛题</div>
+        <table class="tck-table ranking_table">
+            <thead>
+            <tr>
+                <td>赛题</td>
+                <td>类别</td>
+                <td>分数</td>
+                <td>提交时间</td>
+            </tr>
+            </thead>
+            <tbody>s
+            {% for i in answer_list %}
+                <tr>
+                    <td>{{ i.image_name }}</td>
+                    <td>{{ i.category }}</td>
+                    <td>{{ i.score }}</td>
+                    <td>{{ i.create_date |date:"Y/m/d H:i:s" }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        <div class="layui-card-body ">
+            <div class="page">
+                <div>
+                    <ul class="pagination" id="pager">
+                        {#上一页按钮开始#}
+                        {# 如果当前页有上一页#}
+                        {% if score_list.has_previous %}
+                            {#  当前页的上一页按钮正常使用#}
+                            <li class="previous"><a
+                                    href="{% url "front_rank" %}?page={{ score_list.previous_page_number }}">上一页</a>
+                            </li>
+                        {% else %}
+                            {# 当前页的不存在上一页时,上一页的按钮不可用#}
+                            <li class="previous disabled"><a href="#">上一页</a></li>
+                        {% endif %}
+                        {#上一页按钮结束#}
+                        {# 页码开始#}
+                        {% for num in paginator.page_range %}
+
+                            {% if num == currentPage %}
+                                <li class="item active"><a href="{% url "front_rank" %}?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% else %}
+                                <li class="item"><a href="{% url "front_rank" %}?page={{ num }}">{{ num }}</a></li>
+
+                            {% endif %}
+                        {% endfor %}
+                        {#页码结束#}
+                        {# 下一页按钮开始#}
+                        {% if score_list.has_next %}
+                            <li class="next"><a
+                                    href="{% url "front_rank" %}?page={{ score_list.next_page_number }}">下一页</a>
+                            </li>
+                        {% else %}
+                            <li class="next disabled"><a href="#">下一页</a></li>
+                        {% endif %}
+                        {# 下一页按钮结束#}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- 已解答 结束 -->
+
+<script src="{% static '/front/bootstrap/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+    window.onresize = function () {
+        this.chart1 = echarts.getInstanceByDom(document
+            .getElementById('result_lx'));
+        this.chart2 = echarts.getInstanceByDom(document.getElementById('result_ture'));
+        this.chart1.resize();
+        this.chart2.resize();
+    };
+    const obj_2 = {
+        obj_box: '.page_2', //翻页容器
+        total_item: 10, //条目总数
+        per_num: 1, //每页条目数
+        current_page: 2 //当前页
+    };
+    /*调用分页方法,初始化数据*/
+    page_ctrl(obj_2);
+</script>
+</body>
+</html>

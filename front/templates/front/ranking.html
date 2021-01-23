@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>黑石碑-排行榜</title>
+    <!--[if lt IE 9]>
+		<meta http-equiv="refresh" content="0;ie.html"/>
+		<![endif]-->
+    <link href="{% static '/front/bootstrap/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static '/front/css/index.css' %}" rel="stylesheet"/>
+    <script src="{% static '/front/js/jquery-1.9.1.min.js' %}"></script>
+    <script src="{% static '/front/js/echarts.min.js' %}"></script>
+
+
+    {% comment %}layui测试{% endcomment %}
+
+</head>
+<body class="body-bg">
+<!-- 导航栏开始 -->
+{% include 'front/include/nav.html' %}
+<!-- 导航栏结束 -->
+<!-- top 10开始 -->
+<div class="content">
+    <div class="container">
+        <div class="txt-title">
+            <img src="{% static '/front/img/ranking_list_titleBG.png' %}" class="ranking_title_img1"/>
+            <h2 class="content-title ranking_color">Top Teams</h2>
+            <img src="{% static '/front/img/ranking_list_titleBG.png' %}" class="ranking_title_img2"/>
+        </div>
+        <!-- echarts 图表开始 -->
+        {#        <div class="top_bg">#}
+        {#            <div id="rankingTop" style="height: 500px; width: 95%;"></div>#}
+        {#            <script type="text/javascript">#}
+        {#                var chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/');#}
+        {#                chatSocket.onmessage = function (e) {#}
+        {#                    var data = JSON.parse(e.data);#}
+        {#                    var message = data['message'];#}
+        {#                    console.log('message:' + message);#}
+        {##}
+        {#                };#}
+        {#                var myChart = echarts.init(document.getElementById('rankingTop'));#}
+        {#                option = {#}
+        {#                    tooltip: {#}
+        {#                        trigger: 'axis'#}
+        {#                    },#}
+        {#                    legend: {#}
+        {#                        data: ['蔡小葵', '蔡大葵', '蔡中葵', '蔡小小', '蔡小奎', '蔡小魁', '蔡小跬', '蔡小瑞', '蔡小锐', '蔡小睿'],#}
+        {#                        right: '0',#}
+        {#                        top: '50',#}
+        {#                        itemGap: 30,#}
+        {#                        orient: 'vertical',#}
+        {#                        textStyle: {#}
+        {#                            color: '#00baff',#}
+        {#                            fontSize: 14,#}
+        {#                        }#}
+        {#                    },#}
+        {#                    grid: {#}
+        {#                        left: '3%',#}
+        {#                        right: '12%',#}
+        {#                        bottom: '3%',#}
+        {#                        containLabel: true#}
+        {#                    },#}
+        {##}
+        {#                    xAxis: [{#}
+        {#                        type: 'category',#}
+        {#                        boundaryGap: false,#}
+        {#                        data: ['04-12', '04-12', '04-13 11:00', '04-14', '04-14 11:00',#}
+        {#                            '04-15 11:00', '04-16', '04-16 11:00', '04-17 11:00', '04-18', '04-18 11:00', '04-19 11:00', '04-20'],#}
+        {#                        axisLine: {#}
+        {#                            show: true,#}
+        {#                            lineStyle: {#}
+        {#                                color: '#00baff'#}
+        {#                            }#}
+        {#                        },#}
+        {#                        axisLabel: {#}
+        {#                            interval: 2,#}
+        {#                        },#}
+        {#                        splitLine: {#}
+        {#                            show: true,#}
+        {#                            lineStyle: {#}
+        {#                                color: 'rgba(0,186,255,0.1)'#}
+        {#                            }#}
+        {#                        },#}
+        {#                    }],#}
+        {#                    yAxis: {#}
+        {#                        type: 'value',#}
+        {#                        axisLine: {#}
+        {#                            show: true,#}
+        {#                            lineStyle: {#}
+        {#                                color: '#00baff'#}
+        {#                            }#}
+        {#                        },#}
+        {#                        splitLine: {#}
+        {#                            show: true,#}
+        {#                            lineStyle: {#}
+        {#                                color: '#00baff'#}
+        {#                            }#}
+        {#                        }#}
+        {#                    },#}
+        {#                    series: [#}
+        {##}
+        {#                        {#}
+        {#                            name: '蔡小瑞',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#fff600',#}
+        {#                            data: ["0", '2300', "1965", '1665', "2445", "2665", "2965", "2319", "2068", "3101", "2899", "2690", "2716",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡大葵',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#00d2ff',#}
+        {#                            data: ["0", '813', "1165", '1665', "1745", "1935", "2015", "2219", "2198", "2011", "2389", "2510", "2676",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡中葵',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#ff0000',#}
+        {#                            data: ["0", '720', "1035", '965', "1145", "1365", "1565", "1619", "1768", "1531", "1699", "1990", "1716",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小葵',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#0042ff',#}
+        {#                            data: ["0", '1300', "1365", '1365', "2245", "1765", "1765", "2319", "2068", "2431", "2399", "2490", "2916",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小小',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#7200ff',#}
+        {#                            data: ["0", '1900', "1465", '2665', "2245", "2795", "2865", "3019", "2588", "2341", "2290", "1950", "1723",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小奎',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#b400ff',#}
+        {#                            data: ["0", '800', "1065", '1165', "1345", "1265", "1865", "2019", "2168", "2031", "2499", "2290", "1263",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小魁',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#ffffff',#}
+        {#                            data: ["0", '1250', "1265", '1565', "2045", "1965", "2665", "2469", "2546", "2461", "2799", "2660", "2557",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小跬',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#00d2ff',#}
+        {#                            data: ["0", '1530', "1965", '2365', "2045", "1795", "1965", "2419", "2668", "2831", "2909", "2990", "1916",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小锐',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#00ff7e',#}
+        {#                            data: ["0", '1130', "1965", '1305', "1945", "1865", "1665", "2619", "2768", "2401", "2459", "2690", "3196",]#}
+        {#                        },#}
+        {#                        {#}
+        {#                            name: '蔡小睿',#}
+        {#                            smooth: true,#}
+        {#                            symbolSize: 8,#}
+        {#                            symbol: 'circle',#}
+        {#                            type: 'line',#}
+        {#                            color: '#ff9000',#}
+        {#                            data: ["0", '1400', "1965", '1865', "2245", "2765", "1965", "2379", "2568", "2331", "2319", "2490", "2236",]#}
+        {#                        }#}
+        {#                    ]#}
+        {#                };#}
+        {##}
+        {#                myChart.setOption(option);#}
+        {#            </script>#}
+        {#        </div>#}
+        <!-- echarts 图表结束 -->
+    </div>
+</div>
+<!-- top 10结束 -->
+<!-- 排行总榜 开始 -->
+<div class="content">
+    <div class="container">
+        {#        <div class="ranking_ul">#}
+        {#            <ul>#}
+        {#                <li class="ranking-li">总榜</li>#}
+        {#                <li class="ranking-li">Android</li>#}
+        {#                <li class="ranking-li">MISC</li>#}
+        {#                <li class="ranking-li">Reverse</li>#}
+        {#                <li class="ranking-li">Web</li>#}
+        {#            </ul>#}
+        {#        </div>#}
+        <!-- 排行榜表格 开始 -->
+        <table class="tck-table ranking_table">
+            <thead>
+            <tr>
+                <td>排名</td>
+                <td>ID</td>
+                <td>分数</td>
+                <td>解题数</td>
+                <td>学校/单位</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in score_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.username }}</td>
+                    <td>{{ i.score__sum }}</td>
+                    <td>{{ i.username__count }}</td>
+                    <td>{{ i.address }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+        {#        <div class="page_2"></div>#}
+        <div class="layui-card-body ">
+            <div class="page">
+                <div>
+                    <ul class="pagination" id="pager">
+                        {#上一页按钮开始#}
+                        {# 如果当前页有上一页#}
+                        {% if score_list.has_previous %}
+                            {#  当前页的上一页按钮正常使用#}
+                            <li class="previous licolor"><a
+                                    href="{% url "front_rank" %}?page={{ score_list.previous_page_number }}">上一页</a>
+                            </li>
+                        {% else %}
+                            {# 当前页的不存在上一页时,上一页的按钮不可用#}
+                            <li class="previous disabled"><a href="#">上一页</a></li>
+                        {% endif %}
+                        {#上一页按钮结束#}
+                        {# 页码开始#}
+                        {% for num in paginator.page_range %}
+
+                            {% if num == currentPage %}
+                                <li class="item active"><a href="{% url "front_rank" %}?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% else %}
+                                <li class="item"><a href="{% url "front_rank" %}?page={{ num }}">{{ num }}</a></li>
+
+                            {% endif %}
+                        {% endfor %}
+                        {#页码结束#}
+                        {# 下一页按钮开始#}
+                        {% if score_list.has_next %}
+                            <li class="next"><a
+                                    href="{% url "front_rank" %}?page={{ score_list.next_page_number }}">下一页</a>
+                            </li>
+                        {% else %}
+                            <li class="next disabled"><a href="#">下一页</a></li>
+                        {% endif %}
+                        {# 下一页按钮结束#}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 排行榜表格 结束-->
+    </div>
+</div>
+<!-- 排行总榜 结束 -->
+
+<!-- 尾部填充  -->
+<div class="inform_bg">
+
+</div>
+<script>
+
+    const isLoaded = false;
+
+    function reqs() {
+        $.ajax({
+            type: 'GET',
+            url: '/score',
+            dataType: 'json',
+            complete: function () {
+                window.location.reload();
+            },
+
+        });
+    }
+
+    setInterval(function () {
+        reqs();
+    }, 6000);
+</script>
+</body>
+</html>

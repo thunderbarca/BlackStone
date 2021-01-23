@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>黑石碑-赛题</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link href="{% static '/front/bootstrap/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static '/front/css/index.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static '/front/css/layui.css' %}">
+    <script type="text/javascript" src="{% static '/front/js/jquery.min.js' %}"></script>
+
+    <script src="{% static '/front/lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static '/front/js/xadmin.js' %}"></script>
+</head>
+<body class="body-bg">
+<!-- 导航栏开始 -->
+{% include 'front/include/nav.html' %}
+<!-- 导航栏结束 -->
+<!-- 题目模块 开始 -->
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="question2_fh">
+                    <button onclick="window.location.href='{% url 'front_topics' %}'"><img
+                            src="{% static '/front/img/question2_fhj.png' %}"/>返回
+                    </button>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="question2_wt">
+                    <h1>{{ info.topic_name }}</h1>
+                    <h5>题目描述： </h5>
+                    <div class="question2-gs">
+                        {{ info.topic_description }}
+                    </div>
+                    <div style="clear: both;"></div>
+                    {% if info.image_tag %}
+                        <input type="button" value="启动容器" class="question2-qd" onclick="start('{{ info.id }}')"/>
+                        <input type="button" value="销毁容器" class="question2-xh" onclick="destroy('{{ info.id }}')"/>
+                    {% endif %}
+
+                    {% if info.upload_file != 's1riu5' %}
+                        <button class="tck_xz"><img src="{% static '/front/img/questions_xz.png' %}"/> <a
+                                class="download" href="{{ info.upload_file }}">点击下载</a>
+                        </button>
+                    {% endif %}
+                    <input type="text" class="tck_input" id="Flag" value="Flag"/>
+                    <button class="tck_btn" onclick="PUT('{{ info.id }}')">提交答案</button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="question2_tj">
+                    <div class="question2_txt"><p>已提交（{{ result |length }}）</p>
+                        <hr style="background-color: #02A2B9; height: 2px; border: 1px #02a2b9;"/>
+                    </div>
+                    <div class="question-table">
+                        <table class="tck-table">
+                            <thead>
+                            <tr>
+                                <td>昵称</td>
+                                <td>提交日期</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for i in result %}
+                                <tr>
+                                    <td>{{ i.username }}</td>
+                                    <td>{{ i.create_date | date:"Y-m-d H:i:s" }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 题目模块 结束 -->
+
+<script src="{% static '/front/js/jquery-1.9.1.min.js' %}"></script>
+<script src="{% static '/front/js/scrollbar.js' %}"></script>
+<script src="{% static '/front/bootstrap/bootstrap.min.js' %}"></script>
+
+
+<script>
+    layui.use(['laydate', 'form'], function () {
+        const laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+
+
+    function start(docker_id) {
+
+        const token = '{{csrf_token}}';
+        const _data = {action: "start", images_id: docker_id};
+
+        $.ajax({
+            url: "{% url 'front_operate' %}",
+            data: _data,
+            type: 'post',
+            dataType: 'json',
+            headers: {"X-CSRFToken": token},
+            success: function (data) {
+                if (data.status === 200) {
+                    layer.alert("容器启动成功，地址是:" + window.location.hostname + ":" + data.msg, {icon: 6});
+                    return false;
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                    return false;
+                }
+            }
+        });
+
+    }
+
+    function destroy(docker_id) {
+
+        const token = '{{csrf_token}}';
+        const _data = {action: "destroy", images_id: docker_id};
+
+        $.ajax({
+            url: "{% url 'front_operate' %}",
+            data: _data,
+            type: 'post',
+            dataType: 'json',
+            headers: {"X-CSRFToken": token},
+            success: function (data) {
+                if (data.status === 200) {
+                    layer.alert(data.msg, {icon: 6});
+                    return false;
+                } else {
+                    layer.msg(data.msg, {icon: 6});
+                    return false;
+                }
+            }
+        });
+
+    }
+
+    function PUT(info) {
+        const flag = $("#Flag").val();
+
+
+        const token = '{{csrf_token}}';
+        const _data = {image_id: info, flag: flag};
+
+        $.ajax({
+            url: "{% url 'front_flag' %}",
+            data: _data,
+            type: 'post',
+            dataType: 'json',
+            headers: {"X-CSRFToken": token},
+            success: function (data) {
+                if (data.status === 200) {
+                    layer.alert(data.msg, {icon: 6});
+                    return false;
+                } else {
+                    layer.msg(data.msg, {icon: 6});
+                    return false;
+                }
+            }
+        });
+
+    }
+</script>
+
+</body>
+</html>

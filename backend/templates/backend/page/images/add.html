@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'backend/lib/layui-v2.5.5/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'backend/css/public.css' %}" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">题目标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required" lay-reqtext="请输入题目标题" placeholder="请输入题目标题"
+                   value=""
+                   class="layui-input">
+            <tip>填写题目信息。</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">题目描述</label>
+        <div class="layui-input-block">
+            <textarea name="remark" class="layui-textarea" placeholder="请输入描述信息"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">镜像标签</label>
+        <div class="layui-input-block">
+            <input type="text" name="tag" lay-reqtext="请输入镜像标签"
+                   placeholder="请输入镜像标签，例如: nginx:latest"
+                   value=""
+                   class="layui-input">
+            <tip>填写镜像标签。</tip>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">端口</label>
+        <div class="layui-input-block">
+            <input type="text" name="ports" placeholder="请输入容器服务开放端口,例如:80,22" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分类</label>
+        <div class="layui-input-block" lay-filter="myDiv">
+            <select name="category" id="category" lay-filter="mySelect">
+                {% for i in category %}
+                    <option value="{{ i.id }}">{{ i.category_name }}</option>
+
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">前端展示</label>
+        <div class="layui-input-block">
+            <input type="radio" name="display" value=1 title="是" checked="">
+            <input type="radio" name="display" value=0 title="否">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分值</label>
+        <div class="layui-input-block">
+            <input type="number" name="score" lay-verify="required" lay-reqtext="分数不能为空" placeholder="请输入分数" value=""
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">flag</label>
+        <div class="layui-input-block">
+            <input type="text" name="flag" lay-verify="required" lay-reqtext="flag不能为空" placeholder="请输入flag" value=""
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">附件</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="filename" name="filename">
+                <input type="hidden" id="name" name="name">
+                <i class="layui-icon">&#xe67c;</i>文件上传
+            </button>
+            {#            <input type="button" class="layui-btn" id="filename" name="filename" value="文件上传">#}
+            {#                <i class="layui-icon">&#xe67c;</i>#}
+            {#            </input>#}
+
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="{% static 'backend/lib/layui-v2.5.5/layui.js' %}" charset="utf-8"></script>
+<script>
+
+
+    layui.use(['form', 'upload'], function () {
+        const form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        const upload = layui.upload;
+
+
+        //执行实例
+        const uploadInst = upload.render({
+            elem: '#filename' //绑定元素
+            , url: '{% url "uploads" %}' //上传接口
+            , accept: 'file'
+            , exts: 'zip|rar|7z'
+            , done: function (res) {
+                if (res.code !== 0) {
+                    layer.msg(res.msg, {icon: 2});
+                } else {
+                    //上传完毕回调
+                    $("#name").val(res.src);
+                }
+            }
+
+            , error: function () {
+                //请求异常回调
+            }
+        });
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            data = data.field;
+
+            const token = '{{csrf_token}}';
+
+            $.ajax({
+                url: "{% url 'back_images_add' %}",
+                data: data,
+                type: 'post',
+                dataType: 'json',
+                headers: {"X-CSRFToken": token},
+                success: function (data) {
+                    if (data.status === 200) {
+
+                        const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                        parent.layer.close(index); //再执行关闭
+
+                        return false;
+                    } else {
+                        alert(data.msg);
+                        return false;
+                    }
+                }
+            });
+
+        });
+
+    });
+</script>
+</body>
+</html>

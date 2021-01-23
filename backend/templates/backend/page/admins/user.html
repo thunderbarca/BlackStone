@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'backend/lib/layui-v2.5.5/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'backend/css/public.css' %}" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+{#            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>#}
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script src="{% static 'backend/lib/layui-v2.5.5/layui.js' %}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        const $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '{% url "back_api_users" %}',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports'],
+            cols: [[
+                {type: "checkbox", width: 50},
+                {field: 'id', width: 80, title: 'ID', sort: true},
+                {field: 'username', width: 80, title: '用户名'},
+                {field: 'sex', width: 80, title: '性别', sort: false},
+                {field: 'super', width: 100, title: '超级用户'},
+                {field: 'create', title: '创建时间', minWidth: 150},
+                {#{field: 'experience', width: 80, title: '积分', sort: true},#}
+                {field: 'last_ip', minWidth: 160, title: '登录IP', sort: true},
+                {field: 'last_time', minWidth: 160, title: '登录时间'},
+                {#{field: 'wealth', width: 135, title: '财富', sort: true},#}
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            const result = JSON.stringify(data.field);
+            layer.alert(result, {
+                title: '最终的搜索信息'
+            });
+
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    searchParams: result
+                }
+            }, 'data');
+
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                const index = layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: '{% url "back_user_add" %}',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                const checkStatus = table.checkStatus('currentTableId')
+                const data = checkStatus.data;
+                const arr = [];
+                for (let i = 0, len = data.length; i < len; i++) {
+                    arr.push(data[i].uid)
+                }
+
+                const token = '{{csrf_token}}';
+
+                const _data = {"id": arr.join(","), "action": "batch"}
+
+                $.ajax({
+                    url: "{% url 'back_user' %}",
+                    data: _data,
+                    type: 'post',
+                    dataType: 'json',
+                    headers: {"X-CSRFToken": token},
+                    success: function (data) {
+                        if (data.status === 200) {
+                            window.location.href = "/";
+                        } else {
+                            alert(data.msg);
+                            window.location.reload();
+                        }
+                    }
+                });
+
+                return false;
+
+            }
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            if (obj.event === 'delete') {
+                layer.confirm('真的删除?', function () {
+
+                    const token = '{{csrf_token}}';
+
+                    const _data = {"id": obj.data.uid, "action": "each"}
+
+                    $.ajax({
+                        url: "{% url 'back_user' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                window.location.reload();
+                            } else {
+                                alert(data.msg);
+                            }
+                        }
+                    });
+
+                    return false;
+
+                });
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

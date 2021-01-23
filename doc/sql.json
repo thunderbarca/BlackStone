@@ -1,0 +1,102 @@
+[
+  {
+    "model": "backend.users",
+    "pk": "",
+    "fields": {
+      "password": "pbkdf2_sha256$216000$hQZzIsOjvDSU$4J0O+KUcmh3nEFNTQ3oct1rV5HAcK4pFGBsyEPwppLA=",
+      "last_login": "2021-01-23T07:47:13.548",
+      "username": "luffy",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-17T19:51:50.004",
+      "create_date": "2021-01-17T19:51:50.115",
+      "nickname": null,
+      "sex": "男",
+      "is_superuser": true,
+      "remark": null,
+      "last_ip": "127.0.0.1",
+      "last_time": "2021-01-23 07:47:13",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "backend.category",
+    "pk": "d75d75df-2ec3-4686-a5d2-1c33afd724fc",
+    "fields": {
+      "category_name": "WEB",
+      "create_date": "2021-01-17T21:51:32.628"
+    }
+  },
+  {
+    "model": "backend.category",
+    "pk": "dd30f050-9f2e-4fb4-a2f0-3c9278ceb9a5",
+    "fields": {
+      "category_name": "MISC",
+      "create_date": "2021-01-20T09:09:34.047"
+    }
+  },
+  {
+    "model": "backend.topicname",
+    "pk": "27223ea4-3f40-450a-9f35-4b591a23ce0b",
+    "fields": {
+      "create_date": "2021-01-20T11:38:11.445",
+      "topic_name": "成绩单",
+      "topic_description": "快来查询你的成绩吧",
+      "image_img": "registry.png",
+      "image_status": "",
+      "image_tag": "ap0llo/transcript:latest",
+      "flag_strings": "flag{Sql_INJECT0N_4813drd8hz4}",
+      "pull_status": "Complete",
+      "inside_port": "80",
+      "score": 10,
+      "display": true,
+      "upload_file": "s1riu5",
+      "category": "d75d75df-2ec3-4686-a5d2-1c33afd724fc",
+      "user": ""
+    }
+  },
+  {
+    "model": "backend.topicname",
+    "pk": "44a850f4-a585-4c9a-b33c-d0c65f261f56",
+    "fields": {
+      "create_date": "2021-01-22T16:19:46.359",
+      "topic_name": "so easy",
+      "topic_description": "我是成为海贼王的男人",
+      "image_img": "registry.png",
+      "image_status": "",
+      "image_tag": null,
+      "flag_strings": "flag{4bc5887acd06cbd9a98b6eb6b6abe221}",
+      "pull_status": "Complete",
+      "inside_port": "",
+      "score": 5,
+      "display": true,
+      "upload_file": "/static/front/uploads/0d1d4c42ad32651fb4f499ace4aaca34.zip",
+      "category": "dd30f050-9f2e-4fb4-a2f0-3c9278ceb9a5",
+      "user": ""
+    }
+  },
+  {
+    "model": "backend.topicname",
+    "pk": "f492ef52-d95a-4f88-8911-7148b0293103",
+    "fields": {
+      "create_date": "2021-01-20T11:33:58.595",
+      "topic_name": "放松",
+      "topic_description": "这是一道签到题",
+      "image_img": "registry.png",
+      "image_status": "",
+      "image_tag": "ap0llo/easy:latest",
+      "flag_strings": "flag{3473d48903546b3ab996bce49667b040}",
+      "pull_status": "Complete",
+      "inside_port": "80",
+      "score": 5,
+      "display": true,
+      "upload_file": "s1riu5",
+      "category": "d75d75df-2ec3-4686-a5d2-1c33afd724fc",
+      "user": ""
+    }
+  }
+]

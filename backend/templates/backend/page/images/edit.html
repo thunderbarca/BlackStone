@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <title>题目编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{% static 'backend/lib/layui-v2.5.5/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'backend/css/public.css' %}" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">题目标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="topic_name" lay-verify="required" lay-reqtext="请输入题目标题" placeholder="请输入题目标题"
+                   value="{{ topic.topic_name }}"
+                   class="layui-input">
+            <tip>填写题目信息。</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">题目描述</label>
+        <div class="layui-input-block">
+            <textarea name="remark" class="layui-textarea" placeholder="{{ topic.topic_description }}"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">镜像标签</label>
+        <div class="layui-input-block">
+            <input type="text" name="tag" lay-reqtext="请输入镜像标签"
+                   placeholder="请输入镜像标签，例如: nginx:latest"
+                   value="{{ topic.image_tag }}"
+                   class="layui-input" readonly="readonly">
+            <tip>填写镜像标签。</tip>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">端口</label>
+        <div class="layui-input-block">
+            <input type="text" name="ports" placeholder="请输入容器服务开放端口,例如:80,22" value="{{ topic.inside_port }}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">前端展示</label>
+        <div class="layui-input-block">
+            <input type="radio" name="display" value=1 title="是" {% if topic.display %}checked=""{% endif %}>
+            <input type="radio" name="display" value=0 title="否" {% if not topic.display %}checked=""{% endif %}>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分值</label>
+        <div class="layui-input-block">
+            <input type="number" name="score" lay-verify="required" lay-reqtext="分数不能为空" placeholder="请输入分数"
+                   value="{{ topic.score }}"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">flag</label>
+        <div class="layui-input-block">
+            <input type="text" name="flag" lay-verify="required" lay-reqtext="flag不能为空" placeholder="请输入flag"
+                   value="{{ topic.flag_strings }}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+{#<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>#}
+<script src="{% static 'backend/lib/layui-v2.5.5/layui.js' %}" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        const form = layui.form,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            const token = '{{csrf_token}}';
+
+            const _data = {
+                "id": '{{ topic.id }}',
+                "topic_name": data.field.topic_name,
+                "topic_desc": data.field.remark,
+                "ports": data.field.ports,
+                "display": data.field.display,
+                "score": data.field.score,
+                "flag": data.field.flag,
+            }
+
+            $.ajax({
+                url: "{% url 'back_images_edit' %}",
+                data: _data,
+                type: 'post',
+                dataType: 'json',
+                headers: {"X-CSRFToken": token},
+                success: function (data) {
+                    if (data.status === 200) {
+                        const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                        parent.layer.close(index); //再执行关闭
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+
+            return false;
+
+        });
+
+    });
+</script>
+</body>
+</html>
