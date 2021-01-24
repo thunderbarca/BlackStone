@@ -99,7 +99,8 @@ class DockerOperationView(LoginRequiredMixin, View):
 
             search_dict = dict()
 
-            search_dict['username'] = request.user.username
+            search_dict['username'] = request.session.get("user_name", "") if request.session.get("user_name",
+                                                                                                  "") else request.user.username
             search_dict['status'] = "Running"
 
             obj = TopicName.objects.filter(id=images_id).first().image_tag
