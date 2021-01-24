@@ -17,7 +17,7 @@ class TopicsView(LoginRequiredMixin, View):
         search_dict = dict()
         user_resolver = []
 
-        search_dict['username'] = request.user.username
+        search_dict['username'] = request.session.get("user_name", "")
 
         result = Resolver.objects.filter(**search_dict).all()
 

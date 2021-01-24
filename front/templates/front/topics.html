@@ -35,8 +35,11 @@
                                     <div class="dt_bg">
                                         <span class="question-tm">{{ j.topic_name }}</span><br/>
                                         <span class="question-fs">总分：{{ j.score }}</span><br/>
-
                                         <a href="{% url 'front_topic' j.id %}">开始答题</a>
+                                        <br>
+                                        {% if j.topic_name in user_resolver %}
+                                            <span class="question-tm">已完成</span><br/>
+                                        {% endif %}
                                         {#                                        <button href="javascript:void(0)" onclick="show('ms56')">开始答题</button>#}
                                     </div>
                                 </div>

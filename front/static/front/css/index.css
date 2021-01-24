@@ -796,6 +796,15 @@ div#bs-example-navbar-collapse-1 {
     margin: 40px 0 0 0;
 }
 
+.do_bg {
+    background: url(../img/dt_bg.png) no-repeat center;
+    height: 180px;
+    background-size: 100% 100%;
+    text-align: center;
+    padding: 50px 0;
+    margin: 40px 0 0 0;
+}
+
 .question-tm {
     font-size: 20px;
     color: #fff;
