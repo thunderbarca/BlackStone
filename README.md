@@ -1,4 +1,4 @@
-# 🐒黑石碑系统
+# ⚔️黑石碑系统
 
 **项目正在快速迭代中，请即时更新源代码 [源地址](http://www.github.com/thunderbarca/BlackStone)**
 
@@ -20,7 +20,6 @@ Web框架: **django(3.1.5)**
 数据库: **Postgresql 13**
 
 前端: **Layu-imini**
-
 
 ## 0x03 🍓功能介绍
 
@@ -68,6 +67,9 @@ python3 manager.py runserver 0.0.0.0:8000
 ## 0x05 ⏰长期更新
 - [ ] 各视图的协调优化以及BUG修复
 - [ ] 前台成绩刷新改成websocket
+- [ ] 动态FLAG实现
+- [ ] 增加团队竞赛模式
+- [ ] 一血加成
 
 ## 0x06 🤝外链
 如果你觉得有趣的话，可以关注我的公众号。
@@ -75,7 +77,6 @@ python3 manager.py runserver 0.0.0.0:8000
 
 ## 0x07 🎛题目部署
 详情请参阅[部署](doc/DEPLOY.md)
-
 
 ## 0x08 🏓版权协议
 该项目签署了GPL-3.0授权许可，详情请参阅[COPING](doc/COPYING)。
