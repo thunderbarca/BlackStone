@@ -1,5 +1,4 @@
 from backend.views.index import IndexView
-from backend.views.index import RegView
 from backend.views.index import LogoutView
 from backend.views.index import ChangeView
 from backend.views.login import LoginView
@@ -21,11 +20,13 @@ from backend.views.category import CategoryEditView
 from backend.views.apis import CategoryApiView
 from backend.views.apis import ContainerApiView
 from backend.views.apis import ResolverApiView
+from backend.views.apis import PersonScoreApiView
 from backend.views.container import ContainerView
 from backend.views.resolver import ResolverView
 from backend.views.players import PlayersEditView
 from backend.views.images import ImagesEditView
 from backend.views.uploads import UploadView
+from backend.views.score import PersonScoreView
 
 from django.urls import path
 
@@ -76,4 +77,8 @@ urlpatterns = [
 
     # path('reg', RegView.as_view(), name="reg"),
     path('uploads', UploadView.as_view(), name="uploads"),
+
+    # 成绩相关路由
+    path('person_score_show', PersonScoreView.as_view(), name="back_person_score_show"),
+    path('person_score_api', PersonScoreApiView.as_view(), name="back_person_score_api"),
 ]

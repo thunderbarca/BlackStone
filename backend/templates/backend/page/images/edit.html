@@ -31,7 +31,8 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label required">题目描述</label>
         <div class="layui-input-block">
-            <textarea name="remark" class="layui-textarea" placeholder="{{ topic.topic_description }}"></textarea>
+            <textarea name="remark" class="layui-textarea"
+                      placeholder="{{ topic.topic_description }}">{{ topic.topic_description }}</textarea>
         </div>
     </div>
 
@@ -75,10 +76,19 @@
         <label class="layui-form-label required">flag</label>
         <div class="layui-input-block">
             <input type="text" name="flag" lay-verify="required" lay-reqtext="flag不能为空" placeholder="请输入flag"
-                   value="{{ topic.flag_strings }}"
+                   value="{{ topic.flag_string }}"
                    class="layui-input">
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">静态分数</label>
+        <div class="layui-input-block">
+            <input type="radio" name="score_method" value=1 title="是" {% if topic.score_type %}checked=""{% endif %}>
+            <input type="radio" name="score_method" value=0 title="否" {% if not topic.score_type %}checked=""{% endif %}>
+        </div>
+    </div>
+
 
     <div class="layui-form-item">
         <div class="layui-input-block">

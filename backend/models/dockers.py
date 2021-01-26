@@ -11,11 +11,13 @@ class TopicName(models.Model):
     image_img = models.CharField(max_length=45, default='registry.png')  # 镜像图片地址
     image_status = models.CharField(max_length=45)
     image_tag = models.CharField(max_length=45, null=True)
-    flag_strings = models.CharField(max_length=125, unique=True, default='flag{}')
+    flag_string = models.CharField(max_length=125, null=True, default='flag{}')
     pull_status = models.CharField(max_length=45)  # Running,Failed,Complete
     inside_port = models.CharField(default="80", max_length=126)
     score = models.IntegerField(default=0)
     display = models.BooleanField(default=True)
+    flag_type = models.CharField(default="static", max_length=32)  # static, dynamic
+    score_type = models.BooleanField(default=True)  # 分数值是不是静态的
 
     upload_file = models.CharField(default="s1riu5", max_length=125)
 
@@ -41,6 +43,7 @@ class Containers(models.Model):
     outside_port = models.CharField(max_length=128)
     contain = models.CharField(max_length=512)
     status = models.CharField(max_length=512, default="1")  # Running Stop
+    flag_string = models.CharField(max_length=128, default="1", null=True)
 
     def __str__(self):
         return f"<{self.image_tag} Container Model>"
@@ -54,6 +57,7 @@ class Resolver(models.Model):
     topic_name = models.CharField(max_length=30, default="default")
     category = models.CharField(max_length=1024)
     type = models.CharField(max_length=32, default="docker")
+    address = models.CharField(max_length=32, null=True)
     answer = models.BooleanField(default=False)
 
     def __str__(self):

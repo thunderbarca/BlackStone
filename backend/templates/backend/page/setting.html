@@ -67,24 +67,17 @@
                     <textarea name="title" class="layui-textarea">layuimini 简洁易用后台管理模板</textarea>
                 </div>
             </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META关键词</label>
-                <div class="layui-input-block">
-                    <textarea name="keywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META描述</label>
-                <div class="layui-input-block">
-                    <textarea name="descript" class="layui-textarea">layuimini，最简洁、清爽、易用的layui后台框架模板。</textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label required">版权信息</label>
-                <div class="layui-input-block">
-                    <textarea name="copyright" class="layui-textarea">© 2019 layuimini.99php.cn MIT license</textarea>
-                </div>
-            </div>
+            <br>
+
+
+            {#            <div class="layui-form-item">#}
+            {#                <label class="layui-form-label required">比赛展示</label>#}
+            {#                <div class="layui-input-block">#}
+            {#                    <input type="radio" name="display" value=1 title="个人模式" checked="">#}
+            {#                    <input type="radio" name="display" value=0 title="团队模式">#}
+            {#                </div>#}
+            {#            </div>#}
+
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn layui-btn-normal" lay-submit lay-filter="setting">确认保存</button>
@@ -96,7 +89,7 @@
 <script src="{% static 'backend/lib/layui-v2.5.5/layui.js' %}" charset="utf-8"></script>
 <script>
     layui.use(['form'], function () {
-        var form = layui.form
+        const form = layui.form
             , layer = layui.layer;
 
         //监听提交

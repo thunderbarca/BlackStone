@@ -75,15 +75,16 @@
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 80, title: 'ID', sort: true},
-                {field: 'username', width: 100, title: '创建者'},
-                {field: 'create', width: 150, title: '创建时间', sort: true},
+                {field: 'username', width: 80, title: '创建者'},
+                {field: 'create', minWidth: 150, title: '创建时间', sort: true},
                 {field: 'topic_name', width: 120, title: '题目名称'},
                 {field: 'image_tag', width: 120, title: '镜像标签'},
-                {field: 'pull_status', title: '镜像状态', width: 150, sort: true},
-                {field: 'flag_strings', minWidth: 150, title: 'flag'},
+                {field: 'pull_status', title: '镜像状态', width: 100, sort: true},
+                {field: 'flag_string', minWidth: 150, title: 'flag'},
                 {field: 'inside_port', width: 80, title: '端口'},
                 {field: 'score', width: 80, title: '分数', sort: true},
                 {field: 'display', minWidth: 80, title: '前台展示', sort: true},
+                {field: 'type', minWidth: 80, title: '静态分数', sort: true},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
@@ -127,62 +128,66 @@
                     layer.full(index);
                 });
             } else if (obj.event === 'delete') {  // 监听删除操作
-                const token = '{{csrf_token}}';
+                layer.confirm('真的删除?', function () {
+                    const token = '{{csrf_token}}';
 
-                const checkStatus = table.checkStatus('currentTableId')
-                const data = checkStatus.data;
-                const arr = [];
-                for (let i = 0, len = data.length; i < len; i++) {
-                    arr.push(data[i].uid)
-                }
-
-                const _data = {"id": arr.join(","), "action": "batch"}
-
-                $.ajax({
-                    url: "{% url 'back_images_show' %}",
-                    data: _data,
-                    type: 'post',
-                    dataType: 'json',
-                    headers: {"X-CSRFToken": token},
-                    success: function (data) {
-                        if (data.status === 200) {
-                            {#window.location.reload();#}
-                            const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
-                            parent.layer.close(index); //再执行关闭
-                        } else {
-                            alert(data.msg);
-                            window.location.reload();
-                        }
+                    const checkStatus = table.checkStatus('currentTableId')
+                    const data = checkStatus.data;
+                    const arr = [];
+                    for (let i = 0, len = data.length; i < len; i++) {
+                        arr.push(data[i].uid)
                     }
-                });
 
-                return false;
+                    const _data = {"id": arr.join(","), "action": "batch"}
+
+                    $.ajax({
+                        url: "{% url 'back_images_show' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                {#window.location.reload();#}
+                                const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                                parent.layer.close(index); //再执行关闭
+                            } else {
+                                alert(data.msg);
+                                window.location.reload();
+                            }
+                        }
+                    });
+
+                    return false;
+                })
             } else if (obj.event === 'clear') {  // 监听清空操作
-                const token = '{{csrf_token}}';
+                layer.confirm('真的全删除?', function () {
+                    const token = '{{csrf_token}}';
 
-                const _data = {"action": "clear"}
+                    const _data = {"action": "clear"}
 
-                $.ajax({
-                    url: "{% url 'back_images_show' %}",
-                    data: _data,
-                    type: 'post',
-                    dataType: 'json',
-                    headers: {"X-CSRFToken": token},
-                    success: function (data) {
-                        if (data.status === 200) {
-                            {#window.location.reload();#}
-                            const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
-                            parent.layer.close(index); //再执行关闭
-                        } else {
-                            alert(data.msg);
-                            window.location.reload();
+                    $.ajax({
+                        url: "{% url 'back_images_show' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                {#window.location.reload();#}
+                                const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                                parent.layer.close(index); //再执行关闭
+                            } else {
+                                alert(data.msg);
+                                window.location.reload();
+                            }
                         }
-                    }
-                });
+                    });
 
-                return false;
+                    return false;
+                })
             }
         });
 
@@ -213,26 +218,28 @@
                 return false;
             } else if (obj.event === 'delete') {
 
-                const token = '{{csrf_token}}';
+                layer.confirm('真的删除?', function () {
+                    const token = '{{csrf_token}}';
 
-                const _data = {"id": obj.data.uid, "action": "each"}
+                    const _data = {"id": obj.data.uid, "action": "each"}
 
-                $.ajax({
-                    url: "{% url 'back_images_show' %}",
-                    data: _data,
-                    type: 'post',
-                    dataType: 'json',
-                    headers: {"X-CSRFToken": token},
-                    success: function (data) {
-                        if (data.status === 200) {
-                            window.location.reload();
-                        } else {
-                            alert(data.msg);
+                    $.ajax({
+                        url: "{% url 'back_images_show' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                window.location.reload();
+                            } else {
+                                alert(data.msg);
+                            }
                         }
-                    }
-                });
+                    });
 
-                return false;
+                    return false;
+                })
 
             }
         });

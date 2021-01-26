@@ -85,7 +85,7 @@
                 {field: 'id', width: 80, title: 'ID', sort: true},
                 {field: 'create', width: 200, title: '创建时间', sort: true},
                 {field: 'username', width: 120, title: '相关用户'},
-                {field: 'image_tag', width: 120, title: '镜像标签'},
+                {field: 'image_tag', minWidth: 120, title: '镜像标签'},
                 {field: 'topic_name', title: '题目名称', minWidth: 150},
                 {field: 'score', width: 150, title: '分数'}
             ]],
@@ -120,32 +120,34 @@
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'delete') {  // 监听删除操作
-                const token = '{{csrf_token}}';
+                layer.confirm('真的删除?', function () {
+                    const token = '{{csrf_token}}';
 
+                    const _data = {"action": "delete"}
 
-                const _data = {"action": "delete"}
-
-                $.ajax({
-                    url: "{% url 'back_resolver_show' %}",
-                    data: _data,
-                    type: 'post',
-                    dataType: 'json',
-                    headers: {"X-CSRFToken": token},
-                    success: function (data) {
-                        if (data.status === 200) {
-                            {#window.location.reload();#}
-                            const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
-                            parent.layer.close(index); //再执行关闭
-                        } else {
-                            alert(data.msg);
-                            window.location.reload();
+                    $.ajax({
+                        url: "{% url 'back_resolver_show' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                {#window.location.reload();#}
+                                const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                                parent.layer.close(index); //再执行关闭
+                            } else {
+                                alert(data.msg);
+                                window.location.reload();
+                            }
                         }
-                    }
-                });
+                    });
 
-                return false;
+                    return false;
+                })
             }
+
         });
 
         //监听表格复选框选择
@@ -177,28 +179,30 @@
                 });
 
                 return false;
+
             } else if (obj.event === 'delete') {
+                layer.confirm('真的删除?', function () {
 
-                const token = '{{csrf_token}}';
+                    const token = '{{csrf_token}}';
+                    const _data = {"id": data.uid, "action": "each"}
 
-                const _data = {"id": data.uid, "action": "each"}
-
-                $.ajax({
-                    url: "{% url 'back_resolver_show' %}",
-                    data: _data,
-                    type: 'post',
-                    dataType: 'json',
-                    headers: {"X-CSRFToken": token},
-                    success: function (data) {
-                        if (data.status === 200) {
-                            window.location.reload();
-                        } else {
-                            alert(data.msg);
+                    $.ajax({
+                        url: "{% url 'back_resolver_show' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                window.location.reload();
+                            } else {
+                                alert(data.msg);
+                            }
                         }
-                    }
-                });
+                    });
 
-                return false;
+                    return false;
+                })
 
             }
         });

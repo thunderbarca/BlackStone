@@ -120,37 +120,39 @@
                     layer.full(index);
                 });
             } else if (obj.event === 'delete') {  // 监听删除操作
-                const token = '{{csrf_token}}';
+                layer.confirm('真的删除?', function () {
+                    const token = '{{csrf_token}}';
 
-                const checkStatus = table.checkStatus('currentTableId')
-                const data = checkStatus.data;
-                const arr = [];
-                for (let i = 0, len = data.length; i < len; i++) {
-                    arr.push(data[i].uid)
-                }
-
-                const _data = {"id": arr.join(","), "action": "batch"}
-
-                $.ajax({
-                    url: "{% url 'back_players' %}",
-                    data: _data,
-                    type: 'post',
-                    dataType: 'json',
-                    headers: {"X-CSRFToken": token},
-                    success: function (data) {
-                        if (data.status === 200) {
-                            {#window.location.reload();#}
-                            const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
-                            parent.layer.close(index); //再执行关闭
-                        } else {
-                            alert(data.msg);
-                            window.location.reload();
-                        }
+                    const checkStatus = table.checkStatus('currentTableId')
+                    const data = checkStatus.data;
+                    const arr = [];
+                    for (let i = 0, len = data.length; i < len; i++) {
+                        arr.push(data[i].uid)
                     }
-                });
 
-                return false;
+                    const _data = {"id": arr.join(","), "action": "batch"}
+
+                    $.ajax({
+                        url: "{% url 'back_players' %}",
+                        data: _data,
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {"X-CSRFToken": token},
+                        success: function (data) {
+                            if (data.status === 200) {
+                                {#window.location.reload();#}
+                                const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                                parent.layer.close(index); //再执行关闭
+                            } else {
+                                alert(data.msg);
+                                window.location.reload();
+                            }
+                        }
+                    });
+
+                    return false;
+                })
             }
         });
 

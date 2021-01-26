@@ -86,11 +86,18 @@ class ImageAddView(AdminRequiredMixin, View):
         topic_flag = request.POST.get("flag", "")
         topic_ports = request.POST.get("ports", "")
         filename = request.POST.get("name", "")
+        score_method = request.POST.get("method", 1)
 
         if topic_display == "1":
             display = True
         else:
             display = False
+
+        # 分数是一成不变还是根据答题人数动态变换
+        if score_method == "1":
+            method = True
+        else:
+            method = False
 
         if Category.objects.filter(id=topic_category).count() == 0:
             data = {"status": 403, "msg": "标签不存在"}
@@ -100,7 +107,7 @@ class ImageAddView(AdminRequiredMixin, View):
             data = {"status": 403, "msg": "题目已存在"}
             return JsonResponse(data, safe=False)
 
-        if TopicName.objects.filter(flag_strings=topic_flag).count() != 0:
+        if TopicName.objects.filter(flag_string=topic_flag).count() != 0:
             data = {"status": 403, "msg": "flag已存在"}
             return JsonResponse(data, safe=False)
 
@@ -119,22 +126,27 @@ class ImageAddView(AdminRequiredMixin, View):
 
         if len(topic_image) > 0:
             # 如果提供了镜像名称
-            docker_name = TopicName.objects.create(id=get_uuid(), topic_name=topic_title,
-                                                   topic_description=topic_desc,
-                                                   image_tag=topic_image, display=display, score=topic_score,
-                                                   flag_strings=topic_flag, inside_port=topic_ports,
-                                                   category=category,
-                                                   user=request.user, pull_status="Running", upload_file=file_path)
+            TopicName.objects.create(id=get_uuid(), topic_name=topic_title,
+                                     topic_description=topic_desc,
+                                     image_tag=topic_image, display=display, score=topic_score,
+                                     flag_string=topic_flag, inside_port=topic_ports,
+                                     category=category,
+                                     user=request.user, pull_status="Running", flag_type="static",
+                                     score_type=method,
+                                     upload_file=file_path)
 
             docker = DockerDeploy(name=topic_image)
             docker.start()
+
         else:
-            docker_name = TopicName.objects.create(id=get_uuid(), topic_name=topic_title,
-                                                   topic_description=topic_desc,
-                                                   display=display, score=topic_score,
-                                                   flag_strings=topic_flag, inside_port=topic_ports,
-                                                   category=category,
-                                                   user=request.user, pull_status="Complete", upload_file=file_path)
+            TopicName.objects.create(id=get_uuid(), topic_name=topic_title,
+                                     topic_description=topic_desc,
+                                     display=display, score=topic_score,
+                                     flag_string=topic_flag, inside_port=topic_ports,
+                                     category=category,
+                                     user=request.user, pull_status="Complete", flag_type="static",
+                                     score_type=method,
+                                     upload_file=file_path)
 
         data = {"status": 200, "msg": "创建成功"}
         return JsonResponse(data, safe=False)
@@ -165,11 +177,17 @@ class ImagesEditView(AdminRequiredMixin, View):
         display = request.POST.get("display", "1")
         score = request.POST.get("score", "")
         flag = request.POST.get("flag", "")
+        method = request.POST.get("score_method", "1")
 
         if display == "1":
             topic_display = True
         else:
             topic_display = False
+
+        if method == "1":
+            _score = True
+        else:
+            _score = False
 
         topic = TopicName.objects.filter(id=id_str)
         if topic.count() == 0:
@@ -192,7 +210,9 @@ class ImagesEditView(AdminRequiredMixin, View):
             _topic.score = str2int(score)
 
         if len(flag) > 0:
-            _topic.flag_strings = flag
+            _topic.flag_string = flag
+
+        _topic.score_type = _score
 
         _topic.save()
 
