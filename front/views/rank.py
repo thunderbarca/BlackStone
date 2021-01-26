@@ -7,6 +7,7 @@ from backend.models.dockers import Resolver
 
 from django.db.models import Sum
 from django.db.models import Count
+from django.db.models import Max
 
 
 class RankView(View):
@@ -21,9 +22,9 @@ class RankView(View):
             user_list.append(i.username)
 
         info = Resolver.objects.filter(username__in=user_list).values('username').annotate(
-            Sum('score')).annotate(Count('username')).order_by("-score__sum")
+            Sum('score')).annotate(Count('username')).annotate(Max('address')).order_by("-score__sum")
 
-        # 生成paginator对象,定义每页显示10条记录
+        # 生成paginator对象,定义每页显示15条记录
         paginator = Paginator(info, 15)
 
         # 从前端获取当前的页码数,默认为1

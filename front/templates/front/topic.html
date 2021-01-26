@@ -171,7 +171,9 @@
             headers: {"X-CSRFToken": token},
             success: function (data) {
                 if (data.status === 200) {
-                    layer.alert(data.msg, {icon: 6});
+                    layer.alert(data.msg, {icon: 6}, function () {
+                        window.location.reload();
+                    });
                     return false;
                 } else {
                     layer.msg(data.msg, {icon: 6});

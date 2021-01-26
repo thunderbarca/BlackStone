@@ -72,7 +72,7 @@ class DockerOperationView(LoginRequiredMixin, View):
 
                 result1 = ",".join(run_list)
 
-                data = {"status": 300, "msg": "题目:{}已启动，请先关闭再启动此镜像".format(result1)}
+                data = {"status": 403, "msg": "题目:{}已启动，请先关闭再启动此镜像".format(result1)}
                 return JsonResponse(data, safe=False)
 
             try:

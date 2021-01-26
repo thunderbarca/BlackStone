@@ -24,7 +24,7 @@ class PersonalView(View):
             user_list.append(i.username)
 
         result = Resolver.objects.filter(answer=True).filter(username__in=user_list).values('username').annotate(
-            Sum('score')).annotate(Count('username'))
+            Sum('score')).annotate(Count('username')).order_by("-score__sum")
 
         for i, line in enumerate(result):
             sort_dict[line["username"]] = i + 1
@@ -34,13 +34,13 @@ class PersonalView(View):
             key1 = sort_dict[username]
             score = score_list[username]
         except KeyError:
-            key = 0
+            key1 = 0
             score = 0
             answer_list = []
             score_list = []
             return render(request, self.template_name, locals())
 
-        answer_list = Resolver.objects.filter(answer=True).filter(username=username).all()
+        answer_list = Resolver.objects.filter(answer=True).filter(username=username).all().order_by("create_date")
 
         # 从前端获取当前的页码数,默认为1
         page = request.GET.get('page', 1)
