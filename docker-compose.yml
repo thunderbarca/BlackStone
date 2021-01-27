@@ -2,6 +2,7 @@ version: "3"
 services:
   postgres:
     image: postgres:13-alpine
+    restart: always
     environment:
       POSTGRES_DB: django
       POSTGRES_USER: postgres
