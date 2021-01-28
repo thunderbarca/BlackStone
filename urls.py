@@ -19,7 +19,11 @@ from django.urls import include
 from backend import backend_url
 from front import front_urls
 
+from front.views.errors import PageNotFound
+
 urlpatterns = [
     path('', include(front_urls)),
     path('back/', include(backend_url)),
 ]
+
+handler404 = PageNotFound.as_view()
