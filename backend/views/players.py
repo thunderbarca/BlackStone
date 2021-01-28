@@ -36,7 +36,7 @@ class PlayersView(AdminRequiredMixin, View):
             Players.objects.filter(id__in=user_id).delete()
 
         else:
-            data = {"status": 403, "msg": "方式错误"}
+            data = {"status": 403, "msg": "删除用户失败"}
             return JsonResponse(data, safe=False)
 
         data = {"status": 200, "msg": "用户删除成功"}

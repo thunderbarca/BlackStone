@@ -165,8 +165,9 @@ class ImagesEditView(AdminRequiredMixin, View):
             return JsonResponse(data, safe=False)
 
         topic_name = TopicName.objects.get(id=id_str)
+        category = Category.objects.all()
 
-        return render(request, self.template_name, {"topic": topic_name})
+        return render(request, self.template_name, {"topic": topic_name, "category": category})
 
     @staticmethod
     def post(request):
@@ -177,6 +178,7 @@ class ImagesEditView(AdminRequiredMixin, View):
         display = request.POST.get("display", "1")
         score = request.POST.get("score", "")
         flag = request.POST.get("flag", "")
+        category = request.POST.get("category", "")
         method = request.POST.get("score_method", "1")
 
         if display == "1":
@@ -213,6 +215,9 @@ class ImagesEditView(AdminRequiredMixin, View):
             _topic.flag_string = flag
 
         _topic.score_type = _score
+
+        _topic.category = Category.objects.get(id=category) if Category.objects.get(
+            id=category) else Category.objects.get(category_name="WEB")
 
         _topic.save()
 

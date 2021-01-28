@@ -47,6 +47,17 @@
         </div>
     </div>
 
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分类</label>
+        <div class="layui-input-block" lay-filter="myDiv">
+            <select name="category" id="category" lay-filter="mySelect">
+                {% for i in category %}
+                    <option value="{{ i.id }}">{{ i.category_name }}</option>
+
+                {% endfor %}
+            </select>
+        </div>
+    </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label ">端口</label>
@@ -85,7 +96,8 @@
         <label class="layui-form-label required">静态分数</label>
         <div class="layui-input-block">
             <input type="radio" name="score_method" value=1 title="是" {% if topic.score_type %}checked=""{% endif %}>
-            <input type="radio" name="score_method" value=0 title="否" {% if not topic.score_type %}checked=""{% endif %}>
+            <input type="radio" name="score_method" value=0 title="否"
+                   {% if not topic.score_type %}checked=""{% endif %}>
         </div>
     </div>
 
@@ -96,7 +108,6 @@
         </div>
     </div>
 </div>
-{#<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>#}
 <script src="{% static 'backend/lib/layui-v2.5.5/layui.js' %}" charset="utf-8"></script>
 <script>
     layui.use(['form'], function () {
@@ -116,6 +127,7 @@
                 "display": data.field.display,
                 "score": data.field.score,
                 "flag": data.field.flag,
+                "category": data.field.category,
             }
 
             $.ajax({

@@ -154,6 +154,7 @@ class ImagesApiView(AdminRequiredMixin, View):
                         'score': v.score,
                         'display': v.display,
                         'type': v.score_type,
+                        'category': v.category.category_name,
                         'uid': v.id}
 
             new_list.append(new_dict)

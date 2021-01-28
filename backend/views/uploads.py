@@ -1,3 +1,5 @@
+import time
+
 from settings.base import BASE_DIR
 from django.views.generic import View
 from django.http import JsonResponse
@@ -31,7 +33,7 @@ class UploadView(AdminRequiredMixin, View):
 
             return JsonResponse(data)
 
-        filename = gen_md5() + "." + upload_file.name.split(".")[-1]
+        filename = gen_md5(str(time.time()).encode("utf-8")) + "." + upload_file.name.split(".")[-1]
         store_path = BASE_DIR.joinpath("front", "static", "front", "uploads", filename)
         destination = open(store_path, 'wb+')  # 打开特定的文件进行二进制的写操作
         for chunk in upload_file.chunks():  # 分块写入文件

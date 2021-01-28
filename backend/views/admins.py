@@ -34,7 +34,7 @@ class UserView(AdminRequiredMixin, ListView):
             Users.objects.filter(id__in=user_id).delete()
 
         else:
-            data = {"status": 403, "msg": "方式错误"}
+            data = {"status": 403, "msg": "无法删除用户"}
             return JsonResponse(data, safe=False)
 
         data = {"status": 200, "msg": "用户删除成功"}
