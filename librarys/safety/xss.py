@@ -38,7 +38,7 @@ def xss_filter(func):
         try:
             jsondata = json.loads(result.content)
             result.content = json.dumps(jsonXssFilter(jsondata))
-        except:
+        except json.JSONDecodeError:
             result.content = jsonXssFilter(result.content)
         return result
 

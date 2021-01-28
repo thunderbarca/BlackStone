@@ -10,6 +10,10 @@ class BlackBaseException(Exception):
     pass
 
 
+class BlackImageStartException(BlackBaseException):
+    pass
+
+
 class BlackConnectException(BlackBaseException):
     def __init__(self, address):
         self.address = address

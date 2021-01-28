@@ -2,9 +2,15 @@ import uuid
 import datetime
 import hashlib
 import time
+import random
+import string
 
 
 def get_uuid() -> str:
+    """
+    生成唯一id值
+    :return:
+    """
     return str(uuid.uuid4())
 
 
@@ -31,8 +37,35 @@ def str2int(s):
             return 0
 
 
-def gen_md5() -> str:
+def gen_md5(info: bytes) -> str:
+    """
+    用来生成字符串的md5值
+    :param info:加密的信息
+    :return:
+    """
     m2 = hashlib.md5()
-    m2.update(str(time.time()).encode("utf-8"))
+    m2.update(info)
     str_md5 = m2.hexdigest()
     return str_md5
+
+
+def generate_random_str(length=6) -> str:
+    """
+    用来生成随机字符串的函数
+    :param length: 随机字符串函数的长度
+    :return:
+    """
+    ascii_char = string.ascii_lowercase + string.digits + string.ascii_uppercase
+    str_list = [random.choice(ascii_char) for _ in range(length)]
+    random_str = ''.join(str_list)
+    return random_str
+
+
+def generate_flag(salt: str) -> str:
+    """
+    用来生成动态flag字符串
+    :param salt:
+    :return:
+    """
+    flag_plain = generate_random_str(12) + salt + str(time.time())
+    return gen_md5(flag_plain.encode("utf-8"))
