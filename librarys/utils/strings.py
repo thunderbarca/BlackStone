@@ -59,13 +59,3 @@ def generate_random_str(length=6) -> str:
     str_list = [random.choice(ascii_char) for _ in range(length)]
     random_str = ''.join(str_list)
     return random_str
-
-
-def generate_flag(salt: str) -> str:
-    """
-    用来生成动态flag字符串
-    :param salt:
-    :return:
-    """
-    flag_plain = generate_random_str(12) + salt + str(time.time())
-    return gen_md5(flag_plain.encode("utf-8"))
