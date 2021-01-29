@@ -6,6 +6,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.hashers import make_password
 
 from backend.models.users import Players
+from backend.models.dockers import Resolver
 
 from librarys.mixin.permission import AdminRequiredMixin
 from librarys.utils.strings import get_uuid
@@ -28,11 +29,18 @@ class PlayersView(AdminRequiredMixin, View):
         uid = request.POST.get("id", "")
         action = request.POST.get("action", "")
 
+        user_id = uid.split(",")
+        players = Players.objects.filter(id__in=user_id).all()
+
+        username_in = [i.username for i in players]
+
+        # 删除用户，连同答题记录
         if action == "each":
+            Resolver.objects.filter(username__in=username_in).delete()
             Players.objects.filter(id=uid).delete()
 
         elif action == "batch":
-            user_id = uid.split(",")
+            Resolver.objects.filter(username__in=username_in).delete()
             Players.objects.filter(id__in=user_id).delete()
 
         else:
