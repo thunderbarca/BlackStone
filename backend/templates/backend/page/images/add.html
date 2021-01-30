@@ -82,9 +82,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">flag</label>
+        <label class="layui-form-label ">flag</label>
         <div class="layui-input-block">
-            <input type="text" name="flag" lay-verify="required" lay-reqtext="flag不能为空" placeholder="请输入flag" value=""
+            <input type="text" name="flag" lay-reqtext="flag不能为空" placeholder="请输入flag" value=""
                    class="layui-input">
         </div>
     </div>
@@ -109,6 +109,14 @@
         <div class="layui-input-block">
             <input type="radio" name="method" value=1 title="静态分数" checked="">
             <input type="radio" name="method" value=0 title="动态分数">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">flag方式</label>
+        <div class="layui-input-block">
+            <input type="radio" name="key" value=1 title="静态flag" checked="">
+            <input type="radio" name="key" value=0 title="动态flag">
         </div>
     </div>
 

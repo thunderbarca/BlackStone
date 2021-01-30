@@ -86,12 +86,18 @@ class ImageAddView(AdminRequiredMixin, View):
         topic_flag = request.POST.get("flag", "")
         topic_ports = request.POST.get("ports", "")
         filename = request.POST.get("name", "")
-        score_method = request.POST.get("method", 1)
+        score_method = request.POST.get("method", "1")
+        flag_method = request.POST.get("key", "1")  # flag是动态还是静态
 
         if topic_display == "1":
             display = True
         else:
             display = False
+
+        if flag_method == "1":
+            key = "static"
+        else:
+            key = "dynamic"
 
         # 分数是一成不变还是根据答题人数动态变换
         if score_method == "1":
@@ -109,6 +115,10 @@ class ImageAddView(AdminRequiredMixin, View):
 
         if TopicName.objects.filter(flag_string=topic_flag).count() != 0:
             data = {"status": 403, "msg": "flag已存在"}
+            return JsonResponse(data, safe=False)
+
+        if key == "static" and len(topic_flag) == 0:
+            data = {"status": 403, "msg": "flag是静态必须提供flag字符串"}
             return JsonResponse(data, safe=False)
 
         category = Category.objects.filter(id=topic_category).first()
@@ -131,7 +141,7 @@ class ImageAddView(AdminRequiredMixin, View):
                                      image_tag=topic_image, display=display, score=topic_score,
                                      flag_string=topic_flag, inside_port=topic_ports,
                                      category=category,
-                                     user=request.user, pull_status="Running", flag_type="static",
+                                     user=request.user, pull_status="Running", flag_type=key,
                                      score_type=method,
                                      upload_file=file_path)
 
@@ -144,7 +154,7 @@ class ImageAddView(AdminRequiredMixin, View):
                                      display=display, score=topic_score,
                                      flag_string=topic_flag, inside_port=topic_ports,
                                      category=category,
-                                     user=request.user, pull_status="Complete", flag_type="static",
+                                     user=request.user, pull_status="Complete", flag_type=key,
                                      score_type=method,
                                      upload_file=file_path)
 
