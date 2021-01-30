@@ -2,6 +2,7 @@ import re
 
 from django.views.generic import View
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 
 from backend.models.dockers import TopicName
 from backend.models.dockers import Containers
@@ -13,6 +14,7 @@ from librarys.mixin.permission import LoginRequiredMixin
 from librarys.utils.strings import get_uuid
 from librarys.common.dockers import ImageStop
 from librarys.utils.strings import str2int
+from librarys.common.flags import generate_flag
 
 
 class DockerOperationView(LoginRequiredMixin, View):
@@ -22,22 +24,27 @@ class DockerOperationView(LoginRequiredMixin, View):
         action = request.POST.get("action")
         images_id = request.POST.get("images_id")
 
-        search_dict = dict()
+        try:
+            topic = TopicName.objects.get(id=images_id)
+        except ObjectDoesNotExist:
+            data = {"status": 403, "msg": "找不到数据"}
+            return JsonResponse(data, safe=False)
+
+        search_dict = {}
 
         if action == "start":
-            obj = TopicName.objects.filter(id=images_id).first()
 
-            if "," in obj.inside_port:
+            if "," in topic.inside_port:
                 port_list = []
                 port_pattern = re.compile("([0-9]+)")
-                ports = port_pattern.findall(obj.inside_port)
+                ports = port_pattern.findall(topic.inside_port)
                 for i in ports:
                     port = str(str2int(i)) if str2int(i) != 0 else "80"
                     port_list.append(port)
 
                 port_list = port_list
             else:
-                port = str(str2int(obj.inside_port)) if str2int(obj.inside_port) != 0 else "80"
+                port = str(str2int(topic.inside_port)) if str2int(topic.inside_port) != 0 else "80"
                 port_list = [port]
 
             port_dict = {}
@@ -51,13 +58,16 @@ class DockerOperationView(LoginRequiredMixin, View):
 
             outside = ",".join(out_list)
 
-            info = TopicName.objects.filter(image_tag=obj.image_tag).first()
+            info = TopicName.objects.filter(image_tag=topic.image_tag).first()
 
             if info is None:
                 data = {"status": 403, "msg": "无此镜像"}
                 return JsonResponse(data, safe=False)
 
-            search_dict['username'] = request.user.username
+            user = str(request.user.username) if str(request.user.username) \
+                else request.session.get("user_name", "")
+
+            search_dict['username'] = user
             search_dict['status'] = "Running"
 
             # 状态检查
@@ -77,13 +87,31 @@ class DockerOperationView(LoginRequiredMixin, View):
 
             try:
 
-                con = DOCKER_CLIENT.containers.run(image=obj.image_tag, ports=port_dict, detach=True)
-                user = str(request.user.username) if str(request.user.username) \
-                    else request.session.get("user_name", "")
+                if topic.flag_type == "status":
+                    # 如果flag是静态
+                    con = DOCKER_CLIENT.containers.run(image=topic.image_tag, ports=port_dict,
+                                                       detach=True)
 
-                Containers.objects.create(id=get_uuid(), username=user, contain=con.id,
-                                          inside_port=obj.inside_port, outside_port=outside, topic_name=obj.topic_name,
-                                          image_tag=obj.image_tag, status="Running")
+                    Containers.objects.create(id=get_uuid(), username=user, contain=con.id,
+                                              inside_port=topic.inside_port, outside_port=outside,
+                                              topic_name=topic.topic_name,
+                                              image_tag=topic.image_tag, status="Running")
+                else:
+                    # 如果flag是动态
+                    con = DOCKER_CLIENT.containers.run(image=topic.image_tag, ports=port_dict,
+                                                       detach=True)
+                    flag = generate_flag(user)
+                    contain_id = con.id
+
+                    # 运行容器中根目录下的start.sh文件修改或生成flag
+                    docker_container = DOCKER_CLIENT.containers.get(contain_id)
+                    command = "/bin/bash /start.sh '{}'".format(flag)
+                    docker_container.exec_run(cmd=command, detach=True)
+
+                    Containers.objects.create(id=get_uuid(), username=user, contain=contain_id,
+                                              inside_port=topic.inside_port, outside_port=outside,
+                                              topic_name=topic.topic_name,
+                                              image_tag=topic.image_tag, status="Running", flag_string=flag)
 
                 data = {"status": 200, "msg": str(port_dict)}
 
