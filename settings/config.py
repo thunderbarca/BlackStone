@@ -5,7 +5,7 @@ import logging
 """
 一些全局属性信息
 """
-PORT_QUEUE = queue.PriorityQueue()
+PORT_QUEUE = queue.Queue()
 
 for i in range(10000, 20000):
     PORT_QUEUE.put(i)
