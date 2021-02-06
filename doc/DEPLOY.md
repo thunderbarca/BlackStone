@@ -12,3 +12,18 @@
 这里面需要注意的只有两个地方
 镜像标签就是docker的标签，比如nginx:latest
 端口号则是docker镜像开放的端口，采用的形式可以是80或者是80,22。
+
+0x06 动态flag题目部署，动态flag只支持docker镜像，只要在根目录下创建一个start.sh，写入修改flag的语句即可(请先确认容器内存在bash,比如apt install bash)，示例:
+
+```shell script
+#!/bin/bash  
+# BlackStone平台使用  
+# Author：  
+
+# 替换  
+sed -i "s/flag{538575657edccfc1c7b9a5bbcb96b66d}/$1/g" /var/www/html/flag.php
+# 根目录  
+echo $1 > /flag.txt
+# ELF文件  
+sed -i "s/flag{538575657edccfc1c7b9a5bbcb96b66d}/$1/g" /flag.c && gcc -o flag flag.c
+```

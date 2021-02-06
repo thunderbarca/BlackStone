@@ -9,10 +9,3 @@ services:
       POSTGRES_PASSWORD: sh@dow
     ports:
       - 127.0.0.1:5432:5432
-
-  # 测试用的docker题目
-  transcript:
-    image: ap0llo/transcript:latest
-
-  easy:
-    image: ap0llo/easy:latest

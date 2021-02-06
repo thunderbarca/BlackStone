@@ -33,20 +33,13 @@ Web框架: **django(3.1.5)**
 
 ### 0x001 一键部署
 
-我把步骤都写在shell脚本里
+我把步骤都写在shell脚本里,  安装完成就是正式环境
 
-debian系用户(Debian, Ubuntu)建议运行debian_run.sh，会使用国内源进行安装
+debian系用户(Debian, Ubuntu, kali)建议运行debian_run.sh，会使用国内源进行安装
 ```bash
 git clone http://www.github.com/thunderbarca/BlackStone.git
 cd BlackStone
 source shell/debian_run.sh
-```
-
-Kali用户使用shell/kali_run.sh
-```bash
-git clone http://www.github.com/thunderbarca/BlackStone.git
-cd BlackStone
-source shell/kali_run.sh
 ```
 
 红帽系操作系统(包括redhat, fedora, centos)请用redhat_run.sh
