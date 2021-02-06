@@ -8,7 +8,6 @@ from django.http import JsonResponse
 from backend.models.users import Users
 
 from librarys.utils.strings import get_now_time
-from librarys.common.tools import Refresh
 
 
 class LoginView(View):
@@ -45,7 +44,7 @@ class LoginView(View):
 
         else:
             # 无论数据提交是否成功，都要在服务器端刷新一遍验证码
-            Refresh(request)
+            # Refresh(request)
 
             # res = requests.get("http://127.0.0.1:8000/get_valid_img")
             data = {"status": 403, "msg": "用户名或者是密码错误"}

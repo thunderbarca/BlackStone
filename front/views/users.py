@@ -7,7 +7,6 @@ from backend.models.users import Players
 
 from librarys.utils.strings import get_uuid
 from librarys.common.tools import PaginatorResults
-from librarys.common.tools import Refresh
 from librarys.mixin.permission import LoginRequiredMixin
 
 
@@ -32,7 +31,7 @@ class RegisterView(View):
             return JsonResponse(data, safe=False)
 
         # 无论数据提交是否成功，都要在服务器端刷新一遍验证码
-        Refresh(request)
+        # Refresh(request)
 
         if len(username) == 0 or len(password) == 0 or len(confirm_password) == 0 or len(address) == 0:
             data = {"status": 403, "msg": "数据不能为空"}

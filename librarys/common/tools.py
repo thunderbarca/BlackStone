@@ -41,7 +41,8 @@ def GenerateHost(request) -> str:
 # 用来刷新验证码的函数
 def Refresh(request):
     try:
-        requests.get(f"{GenerateHost(request)}{reverse('captcha')}")
+        captcha_address = f"{GenerateHost(request)}{reverse('captcha')}"
+        requests.get(captcha_address)
 
     except requests.RequestException as e:
         print(e)
