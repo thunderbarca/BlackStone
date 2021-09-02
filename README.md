@@ -64,12 +64,8 @@ python3 manager.py runserver 0.0.0.0:8000
 - [ ] 增加团队竞赛模式
 - [x] 分数动态计算
 
-## 0x06 🤝外链
-如果你觉得有趣的话，可以关注我的公众号。
-![code](doc/img/code.jpg)
-
-## 0x07 🎛题目部署
+## 0x06 🎛题目部署
 详情请参阅[部署](doc/DEPLOY.md)
 
-## 0x08 🏓版权协议
+## 0x07 🏓版权协议
 该项目签署了GPL-3.0授权许可，详情请参阅[COPING](doc/COPYING)。
